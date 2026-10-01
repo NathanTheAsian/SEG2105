@@ -1,0 +1,69 @@
+Server Program Communication with Two Points
+- data can be sent as rawBytes, types, and objects
+Internet Protocols
+- TCP is connection-oriented which values protection over speed.
+- UDP is sends data raw without overhead and
+Server - Client Interactions
+- a client has an ip adress which is assigned a name relavent to the client machine
+- a server is localhost which is its name. 
+java.ServerSocket class 
+- has multiple constructors each with a different use cases:
+- The main differences are whether the socket is immediately bound to a port, whether you control the connection backlog, and whether you bind to a specific local network interface.
+
+java.Socket class
+- Pings until connection is accepted
+Socket client = server.accept();
+
+- Client side plugs into Socket
+Socket socket = new Socket("localhost", 8080);
+
+java.DataInputStream class
+- used to receive data
+
+java.DataOutputStream class
+- used to send data
+
+Activities of a Client
+1. self.init
+2. connection.init
+3. message
+4. handles events
+	1. message resposne
+	2. server disconnection
+5. Terminiate (priority)
+
+3.5 Technology Neede for Client-Server Systems
+
+Client -> Router (Gateway) -> Local Providers (Router Hopping aka Internet) -> Server
+
+Internet Protocol (IPs)
+- Routes messages from one computer to another 
+- Long messages are split into smaller pieces (packets)
+
+Transmission Control Protocl (TCP)
+- handles connection between two computers
+- allows packet/ip messages to pass through
+- checks if messages are recieved
+
+Domain Name System
+- naming system that provides naming services for computers, services and IPs
+
+* A host has an IP Adress and a host name
+- Server ports range from 0 to 65535
+- Client needs to know port and host name (... port number tangent)
+	Socket client = new Socket("hostname", port);
+IPv4s vs IPv6s
+- IPv4 uses 32 bits and IPv6 128 bits (hex)
+
+Port Number Tangent
+- three categories of port numbers
+1. Reserved (0-1024)
+	- Reserved for vital services
+	- 22 for SSH
+	- 443 for HTTPS
+	- 80 for HTTP
+2. Registered (1025 - 4096)
+3. Ephemeral (4097++)
+	- Single use connections
+
+
