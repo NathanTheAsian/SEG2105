@@ -1,0 +1,12 @@
+default void defaultMethod(String inputString){
+        System.out.println("Inside SomeInterfaceTwo defaultMethod::"+inputString);
+}
+
+	@Override
+	public void makePayment() {
+		// TODO Auto-generated method stub
+
+	}
+	
+    
+    
