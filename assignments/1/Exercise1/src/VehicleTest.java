@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Travis Zhang 300488899 
+ * 
+ * VehicleTest
+ */
 public class VehicleTest {
     public static void main(String[] args) {
         ArrayList<LandVehicle> landVehicles = new ArrayList<>();
