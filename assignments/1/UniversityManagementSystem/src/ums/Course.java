@@ -22,6 +22,9 @@ public class Course {
     /** Professor teaching the course, or null if none is assigned yet. */
     private Professor professor;
 
+    /**Teacher Assistants teaching the course, or null if none is assigned yet */
+    private List<TeachingAssistant> tAssistants = new ArrayList<>(2); 
+
     /** Students registered in the course. */
     private final List<Student> students = new ArrayList<>();
 
@@ -40,6 +43,7 @@ public class Course {
         this.code = code.toUpperCase();
         this.description = description;
         this.capacity = capacity;
+
     }
 
     /**
@@ -87,6 +91,30 @@ public class Course {
         this.professor = professor;
     }
 
+    public List<TeachingAssistant> getTeachingAssistants() {
+        return Collections.unmodifiableList(tAssistants);
+    }
+
+    public void addTeachingAssistant(TeachingAssistant ta) {
+        if(tAssistants.size() == 2){
+            throw new IllegalStateException();
+        }
+        if(tAssistants.size() == 0){
+            tAssistants.add(ta);
+            ta.addCourse(this);
+            return ;
+        }
+
+        if (tAssistants.get(1) != null) {
+            if (tAssistants.get(1) == ta) {
+                throw new IllegalStateException();
+            }
+        }
+        tAssistants.add(ta);
+        ta.addCourse(this);
+
+    }
+
     /**
      * Returns a read-only view of the registered students.
      *
@@ -126,6 +154,16 @@ public class Course {
         sb.append("  Enrolment: ").append(students.size()).append('/').append(capacity).append('\n');
         sb.append("  Professor: ")
           .append(professor == null ? "(none)" : professor.getFullName()).append('\n');
+        sb.append("  TAs: ");
+        if(tAssistants.isEmpty()){
+            sb.append("    (none)\n");
+        }
+        if(tAssistants.size() == 1){
+            sb.append(tAssistants.get(0).getFullName()).append(' ').append('\n');
+        }
+        if(tAssistants.size() == 2){
+            sb.append(tAssistants.get(0).getFullName()).append(", ").append(tAssistants.get(1).getFullName()).append('\n');
+        } 
         sb.append("  Students:\n");
         if (students.isEmpty()) {
             sb.append("    (none)\n");

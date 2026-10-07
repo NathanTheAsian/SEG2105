@@ -36,7 +36,8 @@ public class UniversityManagementSystem {
     // ------------------------------------------------------------------
 
     /**
-     * Processes: {@code create course "<course code>" "<course description>" "<capacity>"}
+     * Processes:
+     * {@code create course "<course code>" "<course description>" "<capacity>"}
      *
      * @param input the arguments of the command
      */
@@ -73,6 +74,9 @@ public class UniversityManagementSystem {
             case "administrator":
                 employee = new Administrator(firstName, lastName, salary);
                 break;
+            case "ta":
+                employee = new TeachingAssistant(firstName, lastName, salary);
+                break;
             default:
                 throw new IllegalArgumentException("Creating a '" + entity + "' is not supported.");
         }
@@ -82,7 +86,8 @@ public class UniversityManagementSystem {
     }
 
     /**
-     * Processes: {@code create student "<First name>" "<Last name>" "<program of study>"}
+     * Processes:
+     * {@code create student "<First name>" "<Last name>" "<program of study>"}
      *
      * @param input the arguments of the command
      */
@@ -122,6 +127,16 @@ public class UniversityManagementSystem {
                 System.out.println("Professor " + professor.getFullName()
                         + " assigned to " + course.getCode() + ".");
                 break;
+            case "ta":
+                TeachingAssistant ta = findEmployee(employeeId, TeachingAssistant.class, "teaching assistant");
+                if (course.getTeachingAssistants().size() >= 2) {
+                    throw new IllegalStateException(
+                            course.getCode() + " already has the maximum number of teaching assistants.");
+                }
+                course.addTeachingAssistant(ta);
+                System.out.println("Teaching assistant " + ta.getFullName()
+                        + " assigned to " + course.getCode() + ".");
+                break;
             default:
                 throw new IllegalArgumentException("Assigning a '" + entity + "' is not supported.");
         }
@@ -159,8 +174,17 @@ public class UniversityManagementSystem {
      * @param input the arguments of the command
      */
     public void processAssignGrade(List<String> input) {
-        // TODO Exercise 2.2
-        throw new UnsupportedOperationException("Assigning grades is not implemented yet.");
+        Student stud = findStudent(input.get(0));
+        int grade = parseInteger(input.get(2), "grade");
+
+        if(!stud.isRegisteredIn(input.get(1))){
+            System.out.println("Error: " +stud.getFullName() + " is not registered in " + input.get(1) + ".");
+            return;
+        }
+
+        stud.addGrade(input.get(1), grade);
+        System.out.println("Grade " + grade + "(" + Student.toLetterGrade(grade) + ")" + "recorded for "
+                + stud.getFullName() + " in " + input.get(1) + ".");
     }
 
     // ------------------------------------------------------------------
@@ -184,6 +208,9 @@ public class UniversityManagementSystem {
                 break;
             case "administrators":
                 type = Administrator.class;
+                break;
+            case "tas":
+                type = TeachingAssistant.class;
                 break;
             default:
                 throw new IllegalArgumentException("Listing '" + entity + "' is not supported.");
@@ -294,7 +321,8 @@ public class UniversityManagementSystem {
      * @param type       the expected class of the employee
      * @param label      the name of the expected type, used in the error message
      * @return the employee
-     * @throws IllegalArgumentException if there is no such employee of the expected type
+     * @throws IllegalArgumentException if there is no such employee of the expected
+     *                                  type
      */
     private <T extends Employee> T findEmployee(String employeeId, Class<T> type, String label) {
         Employee employee = employees.get(employeeId);
