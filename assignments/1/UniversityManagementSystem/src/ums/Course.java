@@ -7,6 +7,8 @@ import java.util.List;
 /**
  * A course offered by the university. A course has at most one professor and
  * a limited number of seats for students.
+ * 
+ * Modified by : Travis Zhang 300488899
  */
 public class Course {
 
@@ -91,13 +93,24 @@ public class Course {
         this.professor = professor;
     }
 
+    /**
+     * Returns a read-only view of the teaching assistants.
+     *
+     * @return rhe teaching assistants
+     */
     public List<TeachingAssistant> getTeachingAssistants() {
         return Collections.unmodifiableList(tAssistants);
     }
 
+    /**
+     * Adds a TA to the course.
+     *
+     * @param The TA
+     * @throws IllegalStateException if the course already has two TAs or if the TA is already assigned to the course
+     */
     public void addTeachingAssistant(TeachingAssistant ta) {
         if(tAssistants.size() == 2){
-            throw new IllegalStateException();
+            throw new IllegalStateException(getCode() + " already has the maximum number of TAs.");
         }
         if(tAssistants.size() == 0){
             tAssistants.add(ta);

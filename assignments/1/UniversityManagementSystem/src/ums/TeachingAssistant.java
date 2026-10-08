@@ -2,7 +2,7 @@ package ums;
 /**
  * Travis Zhang 300488899
  *  
- * TeachingAssistant
+ * Teaching Assistant is a instructor who can help teach up to {@value #MAX_COURSES} courses at a time.
 */
 public class TeachingAssistant extends Instructor {
 
@@ -10,7 +10,7 @@ public class TeachingAssistant extends Instructor {
     private final int MAX_COURSES = 2;
 
     /**
-     *Creates a TA
+     * Creates a TA
      * 
      * @param firstName
      * @param lastName

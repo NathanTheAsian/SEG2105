@@ -12,6 +12,8 @@ import java.util.Map;
  * command word and the entity word are removed). When a command cannot be
  * carried out, the method throws an {@link IllegalArgumentException} or an
  * {@link IllegalStateException} whose message is displayed to the user.
+ * 
+ * Modified by : Travis Zhang 300488899
  */
 public class UniversityManagementSystem {
 
@@ -128,13 +130,9 @@ public class UniversityManagementSystem {
                         + " assigned to " + course.getCode() + ".");
                 break;
             case "ta":
-                TeachingAssistant ta = findEmployee(employeeId, TeachingAssistant.class, "teaching assistant");
-                if (course.getTeachingAssistants().size() >= 2) {
-                    throw new IllegalStateException(
-                            course.getCode() + " already has the maximum number of teaching assistants.");
-                }
+                TeachingAssistant ta = findEmployee(employeeId, TeachingAssistant.class, "ta");
                 course.addTeachingAssistant(ta);
-                System.out.println("Teaching assistant " + ta.getFullName()
+                System.out.println("TA " + ta.getFullName()
                         + " assigned to " + course.getCode() + ".");
                 break;
             default:
@@ -183,7 +181,7 @@ public class UniversityManagementSystem {
         }
 
         stud.addGrade(input.get(1), grade);
-        System.out.println("Grade " + grade + "(" + Student.toLetterGrade(grade) + ")" + "recorded for "
+        System.out.println("Grade " + grade + "(" + Student.toLetterGrade(grade) + ") " + "recorded for "
                 + stud.getFullName() + " in " + input.get(1) + ".");
     }
 

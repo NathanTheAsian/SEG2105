@@ -9,6 +9,8 @@ import java.util.Map;
 /**
  * A student registered at the university. Every student receives a unique,
  * 9-digit student id (e.g. "300000001") when it is created.
+ * 
+ * Modified by : Travis Zhang 300488899
  */
 public class Student extends Person {
 
@@ -125,7 +127,6 @@ public class Student extends Person {
 
     /**
      * Returns the average grade of the student across all courses.
-     * If the student has no grades, returns 0.0.
      *
      * @return the average grade
      */
