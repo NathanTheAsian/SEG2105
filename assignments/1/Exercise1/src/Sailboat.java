@@ -1,5 +1,5 @@
-/**
- * Travis Zhang 300488899
+﻿/**
+ * Travis Zhang 300488899 and Nathan Ng 300494064
  * 
  * Sailboat
  */
@@ -36,3 +36,4 @@ public class Sailboat extends WaterVehicle{
     @Override 
     String getVehicleType(){return "Sailboat"; }
 }
+

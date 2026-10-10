@@ -1,4 +1,4 @@
-package ums;
+﻿package ums;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +8,7 @@ import java.util.List;
  * A course offered by the university. A course has at most one professor and
  * a limited number of seats for students.
  * 
- * Modified by : Travis Zhang 300488899
+ * Modified by : Travis Zhang 300488899 and Nathan Ng 300494064
  */
 public class Course {
 
@@ -188,3 +188,5 @@ public class Course {
         return sb.toString();
     }
 }
+
+

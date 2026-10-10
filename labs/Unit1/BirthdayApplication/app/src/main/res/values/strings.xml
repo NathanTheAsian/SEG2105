@@ -1,5 +1,5 @@
-<resources>
+﻿<resources>
     <string name="app_name">Birthday Application</string>
     <string name="happy_birthday_text">Happy Birthday Trevor!</string>
-    <string name="signature_text">from Travis</string>
+    <string name="signature_text">from Travis and Nathan Ng 300494064</string>
 </resources>
