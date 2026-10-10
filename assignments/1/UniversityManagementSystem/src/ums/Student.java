@@ -1,4 +1,4 @@
-package ums;
+﻿package ums;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +10,7 @@ import java.util.Map;
  * A student registered at the university. Every student receives a unique,
  * 9-digit student id (e.g. "300000001") when it is created.
  * 
- * Modified by : Travis Zhang 300488899
+ * Modified by : Travis Zhang 300488899 and Nathan Ng 300494064
  */
 public class Student extends Person {
 
@@ -206,3 +206,5 @@ public class Student extends Person {
                 + getTranscript();
     }
 }
+
+

@@ -1,5 +1,5 @@
-/**
- * Travis Zhang 300488899
+﻿/**
+ * Travis Zhang 300488899 and Nathan Ng 300494064
  * 
  * Car 
 */
@@ -39,3 +39,4 @@ public class Car extends LandVehicle{
     @Override 
     String getVehicleType(){return "Car"; }
 }
+

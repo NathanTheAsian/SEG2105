@@ -13,7 +13,7 @@ import java.util.Map;
  * carried out, the method throws an {@link IllegalArgumentException} or an
  * {@link IllegalStateException} whose message is displayed to the user.
  * 
- * Modified by : Travis Zhang 300488899
+ * Modified by : Travis Zhang 300488899 and Nathan Ng 300494064
  */
 public class UniversityManagementSystem {
 

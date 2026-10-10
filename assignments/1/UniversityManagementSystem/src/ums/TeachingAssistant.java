@@ -1,6 +1,6 @@
-package ums;
+﻿package ums;
 /**
- * Travis Zhang 300488899
+ * Travis Zhang 300488899 and Nathan Ng 300494064
  *  
  * Teaching Assistant is a instructor who can help teach up to {@value #MAX_COURSES} courses at a time.
 */
@@ -45,3 +45,4 @@ public class TeachingAssistant extends Instructor {
 
 
 }
+

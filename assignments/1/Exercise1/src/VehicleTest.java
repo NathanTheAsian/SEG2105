@@ -1,8 +1,8 @@
-import java.util.ArrayList;
+﻿import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Travis Zhang 300488899 
+ * Travis Zhang 300488899 and Nathan Ng 300494064 
  * 
  * VehicleTest
  */
@@ -91,3 +91,4 @@ public class VehicleTest {
         
     }
 }
+
