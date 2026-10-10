@@ -1,0 +1,5 @@
+@startuml
+' Generic interaction example
+
+class 
+@enduml
