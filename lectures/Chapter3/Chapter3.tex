@@ -1,0 +1,151 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{graphicx}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\textbf{SEG2105}}
+\fancyfoot[C]{\thepage}
+
+\newcounter{chapterNumber}
+\setcounter{chapterNumber}{3}
+\newcounter{headerOneCount}
+\newcounter{headerTwoCount}[headerOneCount]
+\setcounter{headerOneCount}{-1}
+\renewcommand{\theheaderOneCount}{\arabic{headerOneCount}}
+\renewcommand{\theheaderTwoCount}{\arabic{headerTwoCount}}
+
+\newcommand{\Title}[1]{%
+  \begin{center}
+    \fontsize{16}{28}\selectfont\textbf{#1}
+  \end{center}
+}
+
+\newcommand{\HeaderOne}[1]{%
+  \refstepcounter{headerOneCount}%
+  \setcounter{headerTwoCount}{-1}%
+  \noindent\fontsize{14}{22}\selectfont\textbf{\arabic{chapterNumber}.\theheaderOneCount\ #1}\par
+}
+
+\newcommand{\HeaderTwo}[1]{%
+  \refstepcounter{headerTwoCount}%
+  \noindent\fontsize{14}{20}\selectfont\textbf{\arabic{chapterNumber}.\theheaderOneCount.\theheaderTwoCount\ #1}\par
+}
+
+\newcommand{\BodyText}[1]{%
+  \fontsize{11}{15}\selectfont #1\par
+
+}
+
+\newenvironment{NumberedList}{%
+  \begin{enumerate}[leftmargin=2em, itemsep=0.35em, topsep=0.35em]
+}{%
+  \end{enumerate}
+}
+
+\newenvironment{DottedList}{%
+  \begin{itemize}[leftmargin=2em, itemsep=0.35em, topsep=0.35em, label=\textbullet]
+}{%
+  \end{itemize}
+}
+
+\begin{document}
+\Title{Chapter 3: Basing Software Development on Reusable Technology}
+
+\HeaderOne{Building on the Experience of Others}
+\BodyText{Why Build X When Y Exists?}
+Types of reuse:
+\begin{DottedList}
+  \item Expertise
+  \item Standard designs and algorithms
+  \item Libraries of classes or procedures
+  \item Powerful commands built into languages and operating systems
+  \item Frameworks
+  \item Complete applications
+\end{DottedList}
+
+\HeaderOne{Frameworks: Reusable Subsystems}
+\BodyText{A framework is reusable software that implements a generic solution to a generalized problem}
+\textbf{Principle: Applications that do different (but related) things tend to have similar designs}
+
+\HeaderTwo{Frameworks to promote reuse}
+\BodyText{\textbf{A framework is inherently \textit{incomplete}}}
+\begin{DottedList}
+  \item Certain classes or methods are used by the framwork but are missing (slots)
+  \item Some functionality is optional, requiring implementation by the dev
+  \item Developers use services provided by the framework. \textbf{Services are called the API}
+\end{DottedList}
+
+\HeaderTwo{Object-oriented frameworks}
+\BodyText{\textbf{In the object oriented paradigm, a framework is composed of a library of classes.}}
+\begin{DottedList}
+  \item The API is defined by the set of all public methods of these classes
+  \item Some of the classes will normally be abstract and there are often many Interfaces
+\end{DottedList}
+
+\newpage
+\HeaderTwo{Frameworks and product lines}
+\BodyText{A product line (or product family) is a set of products built on a common base of technology}
+\begin{DottedList}
+  \item The various products in the product line have different features to satisfy different markets
+  \item The software common to all products in included in a framework
+  \item Each product is produced by filling the available hooks and slots
+\end{DottedList}
+\HeaderTwo{Types of frameworks}
+\BodyText{}
+\begin{DottedList}
+  \item A \textit{horizontal} framework provides general application facilities that a large number of applications can use
+  \item A \textit{vertical} framework (application framework) is more 'complete' but still needs some slots to be filled to adapt it to specific application needs
+\end{DottedList}
+\includegraphics[width=1\textwidth]{Figure1.png}
+\begin{center}
+  \BodyText{Figure 1: Horizontal vs Vertical Framework}
+\end{center}
+
+\newpage
+\HeaderOne{The Client-Server Architecture}
+\BodyText{\textbf{A \textit{Distributed system} is a system in which:}}
+\begin{DottedList}
+  \item Computations are performed by separate programs
+  \item processes are ran separate machines
+  \item machines and programs cooperate to perform the task of the system
+\end{DottedList}
+\BodyText{\textbf{Server:}}
+\begin{DottedList}
+  \item A program that provides a service for other programs that connect to it using a communication channel
+\end{DottedList}
+\BodyText{\textbf{Client:}}
+\begin{DottedList}
+  \item A program that accesses a server (or multiple) to obtain services
+  \item Multiple clients may access a server simultaneously
+\end{DottedList}
+\includegraphics[width=1\textwidth]{Figure2.png}
+\begin{center}
+  \BodyText{Figure 2: A server program communicated with two client programs}
+\end{center}
+
+\newpage
+\HeaderTwo{Activities of a server}
+\BodyText{}
+\begin{NumberedList}
+  \item Initializes itself
+  \item Starts listening for clients
+  \item Handles the following types of events orginiating from clients
+  \begin{NumberedList}
+    \item accepts connections
+    \item responds to messages
+    \item handles client disconnections
+  \end{NumberedList}
+  \item May stop listening
+  \item Must cleanly terminate 
+\end{NumberedList}
+
+
+
+
+
+
+\end{document}

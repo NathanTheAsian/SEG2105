@@ -1,0 +1,86 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{parskip}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\textbf{SEG2105}}
+\fancyfoot[C]{\thepage}
+
+\newcounter{chapterNumber}
+\setcounter{chapterNumber}{0}
+\newcounter{headerOneCount}
+\newcounter{headerTwoCount}[headerOneCount]
+\setcounter{headerOneCount}{-1}
+\renewcommand{\theheaderOneCount}{\arabic{headerOneCount}}
+\renewcommand{\theheaderTwoCount}{\arabic{headerTwoCount}}
+
+\newcommand{\Title}[1]{%
+  \begin{center}
+    \fontsize{24}{28}\selectfont\textbf{#1}
+  \end{center}
+  \vspace{1em}
+}
+
+\newcommand{\HeaderOne}[1]{%
+  \refstepcounter{headerOneCount}%
+  \setcounter{headerTwoCount}{-1}%
+  \vspace{0.75em}
+  \noindent\fontsize{18}{22}\selectfont\textbf{\arabic{chapterNumber}.\theheaderOneCount\ #1}\par
+  \vspace{0.5em}
+}
+
+\newcommand{\HeaderTwo}[1]{%
+  \refstepcounter{headerTwoCount}%
+  \vspace{0.5em}
+  \noindent\fontsize{16}{20}\selectfont\textbf{\arabic{chapterNumber}.\theheaderOneCount.\theheaderTwoCount\ #1}\par
+  \vspace{0.4em}
+}
+
+\newcommand{\BodyText}[1]{%
+  \fontsize{12}{15}\selectfont #1\par
+}
+
+\newenvironment{NumberedList}{%
+  \begin{enumerate}[leftmargin=2em, itemsep=0.35em, topsep=0.35em]
+}{%
+  \end{enumerate}
+}
+
+\newenvironment{DottedList}{%
+  \begin{itemize}[leftmargin=2em, itemsep=0.35em, topsep=0.35em, label=\textbullet]
+}{%
+  \end{itemize}
+}
+
+\begin{document}
+\Title{Lecture Notes}
+
+\HeaderOne{Introduction}
+\BodyText{This is the main body text in 12pt font.}
+\BodyText{The heading numbering stays consistent across the document.}
+
+\HeaderOne{Introduction}
+\BodyText{This is the main body text in 12pt font.}
+\BodyText{The heading numbering stays consistent across the document.}
+
+\HeaderTwo{Subtopic}
+\BodyText{This subsection is labelled with the pattern \texttt{X.Y.0}.}
+
+
+\HeaderTwo{Subtopic}
+\BodyText{This subsection is labelled with the pattern \texttt{X.Y.0}.}
+
+\begin{NumberedList}
+    \item First numbered item
+    \item Second numbered item
+\end{NumberedList}
+
+\begin{DottedList}
+    \item First bullet item
+    \item Second bullet item
+\end{DottedList}
+
+\end{document}
