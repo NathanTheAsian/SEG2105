@@ -1,0 +1,137 @@
+\RequirePackage{fix-cm}
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{needspace}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\textbf{SEG2105}}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+\setlength{\emergencystretch}{2em}
+
+\newcounter{chapterNumber}
+\setcounter{chapterNumber}{1}
+\newcounter{headerOneCount}
+\newcounter{headerTwoCount}[headerOneCount]
+\setcounter{headerOneCount}{-1}
+\renewcommand{\theheaderOneCount}{\arabic{headerOneCount}}
+\renewcommand{\theheaderTwoCount}{\arabic{headerTwoCount}}
+
+\newcommand{\Title}[1]{%
+  \begin{center}
+    \fontsize{16}{28}\selectfont\textbf{#1}
+  \end{center}
+}
+
+\newcommand{\HeaderOne}[1]{%
+  \Needspace{5\baselineskip}
+  \refstepcounter{headerOneCount}%
+  \setcounter{headerTwoCount}{-1}%
+  {\noindent\fontsize{14}{22}\selectfont\textbf{\arabic{chapterNumber}.\theheaderOneCount\ #1}\par}
+}
+
+\newcommand{\HeaderTwo}[1]{%
+  \Needspace{5\baselineskip}
+  \refstepcounter{headerTwoCount}%
+  {\noindent\fontsize{14}{20}\selectfont\textbf{\arabic{chapterNumber}.\theheaderOneCount.\theheaderTwoCount\ #1}\par}
+}
+
+\newcommand{\BodyText}[1]{%
+  \fontsize{11}{15}\selectfont #1\par
+
+}
+
+\newenvironment{NumberedList}{%
+  \begin{enumerate}[leftmargin=2em, itemsep=0.35em, topsep=0.35em]
+}{%
+  \end{enumerate}
+}
+
+\newenvironment{DottedList}{%
+  \begin{itemize}[leftmargin=2em, itemsep=0.35em, topsep=0.35em, label=\textbullet]
+}{%
+  \end{itemize}
+}
+
+\begin{document}
+\Title{Chapter 1: Software and Software Engineering}
+\HeaderOne{The Nature of Software}
+\begin{DottedList}
+  \item Software is intangible: effort, progress, and quality can be difficult to see.
+  \item Reproduction is inexpensive compared with development. Development is labour-intensive and hard to automate completely.
+  \item Easy modification can hide expensive consequences: changes made without understanding the design can introduce defects and complexity.
+  \item Software does not physically wear out. Its structure can deteriorate through poorly planned changes.
+\end{DottedList}
+\HeaderTwo{Types of software}
+\begin{DottedList}
+  \item Real-time embedded systems monitor or control equipment and must meet timing requirements; safety may be critical.
+  \item Data-processing systems support business operations, where data accuracy and security matter.
+  \item Games, mobile applications, and web applications have different users, operating environments, and quality priorities.
+\end{DottedList}
+\HeaderOne{What is Software Engineering?}
+\BodyText{Software engineering solves customer problems through systematic development and evolution of large, sufficiently high-quality software systems within cost, time, and other constraints.}
+\begin{DottedList}
+  \item Understand the customer's problem before choosing a solution. Buying or adapting existing software may be appropriate.
+  \item Apply established techniques in an organized way. Much development evolves existing systems.
+  \item Divide work across a team and coordinate the interfaces between parts. One person cannot understand every detail of a large system.
+  \item Estimate resources realistically and ensure benefits justify costs. Extra features can increase complexity without solving the problem.
+\end{DottedList}
+\HeaderOne{The Software Engineering Profession}
+\BodyText{The term software engineering dates to 1968. An engineering approach combines technical knowledge, disciplined practice, and responsibility for the resulting systems.}
+\HeaderTwo{Ethics}
+\begin{DottedList}
+  \item Protect the public interest and act responsibly toward clients and employers.
+  \item Aim for high product and maintenance standards, and preserve independent professional judgment.
+  \item Promote ethical management and the integrity of the profession.
+  \item Support colleagues fairly and continue learning throughout a career.
+\end{DottedList}
+\HeaderOne{Software Quality}
+\begin{DottedList}
+  \item Usability: users can learn the system and complete their work effectively.
+  \item Efficiency: the system avoids unnecessary use of processor time, memory, and other resources.
+  \item Reliability: the system performs required functions without failure under stated conditions.
+  \item Maintainability: developers can understand and change the system without excessive effort.
+  \item Reusability: components can serve other projects or applications.
+\end{DottedList}
+\HeaderTwo{Stakeholders and tradeoffs}
+\begin{DottedList}
+  \item Users value ease of learning and effective task completion; customers value solving a problem at an acceptable total cost.
+  \item Developers value understandable designs and components that are easy to maintain and reuse.
+  \item Development managers balance customer satisfaction with development and maintenance costs.
+  \item Quality goals can conflict. Optimization may make code harder to maintain; a richer interface may consume more resources.
+  \item Set quality objectives before designing. Over-engineering beyond those needs wastes resources.
+\end{DottedList}
+\HeaderOne{Software Engineering Projects}
+\begin{DottedList}
+  \item Corrective maintenance fixes defects.
+  \item Adaptive maintenance responds to environmental changes such as operating systems, databases, or external rules.
+  \item Enhancement adds user-visible capabilities.
+  \item Reengineering or perfective work improves internal structure and maintainability.
+  \item Greenfield development creates a new system. Many projects instead evolve legacy systems.
+\end{DottedList}
+\HeaderOne{Activities Common to Software Projects}
+\HeaderTwo{Requirements and specification}
+\begin{DottedList}
+  \item Domain analysis develops understanding of the field and problem.
+  \item Gathering obtains information from stakeholders and other sources.
+  \item Analysis organizes and resolves that information. Specification records required behaviour and constraints.
+\end{DottedList}
+\HeaderTwo{Design}
+\begin{DottedList}
+  \item Systems engineering allocates responsibilities between hardware and software.
+  \item Architecture divides software into subsystems and defines their interactions.
+  \item Detailed design determines subsystem internals, user interfaces, and database structures.
+\end{DottedList}
+\HeaderTwo{Modelling, implementation, and delivery}
+\begin{DottedList}
+  \item Use-case models describe goals and interactions. Structural models describe organization. Behavioural models describe interactions and changes over time.
+  \item Programming implements the design. Reviews, inspections, and tests assess quality.
+  \item Deployment makes the system available. Process management coordinates work, resources, and progress.
+  \item These activities recur and inform one another as software evolves.
+\end{DottedList}
+\end{document}

@@ -1,0 +1,161 @@
+\RequirePackage{fix-cm}
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{needspace}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\textbf{SEG2105}}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+\setlength{\emergencystretch}{2em}
+
+\newcounter{chapterNumber}
+\setcounter{chapterNumber}{4}
+\newcounter{headerOneCount}
+\newcounter{headerTwoCount}[headerOneCount]
+\setcounter{headerOneCount}{-1}
+\renewcommand{\theheaderOneCount}{\arabic{headerOneCount}}
+\renewcommand{\theheaderTwoCount}{\arabic{headerTwoCount}}
+
+\newcommand{\Title}[1]{%
+  \begin{center}
+    \fontsize{16}{28}\selectfont\textbf{#1}
+  \end{center}
+}
+
+\newcommand{\HeaderOne}[1]{%
+  \Needspace{5\baselineskip}
+  \refstepcounter{headerOneCount}%
+  \setcounter{headerTwoCount}{-1}%
+  {\noindent\fontsize{14}{22}\selectfont\textbf{\arabic{chapterNumber}.\theheaderOneCount\ #1}\par}
+}
+
+\newcommand{\HeaderTwo}[1]{%
+  \Needspace{5\baselineskip}
+  \refstepcounter{headerTwoCount}%
+  {\noindent\fontsize{14}{20}\selectfont\textbf{\arabic{chapterNumber}.\theheaderOneCount.\theheaderTwoCount\ #1}\par}
+}
+
+\newcommand{\BodyText}[1]{%
+  \fontsize{11}{15}\selectfont #1\par
+
+}
+
+\newenvironment{NumberedList}{%
+  \begin{enumerate}[leftmargin=2em, itemsep=0.35em, topsep=0.35em]
+}{%
+  \end{enumerate}
+}
+
+\newenvironment{DottedList}{%
+  \begin{itemize}[leftmargin=2em, itemsep=0.35em, topsep=0.35em, label=\textbullet]
+}{%
+  \end{itemize}
+}
+
+\begin{document}
+\Title{Chapter 4: Developing Requirements}
+\HeaderOne{Domain Analysis}
+\BodyText{Domain analysis is learning about the business or technical field where software will operate. A domain expert has deep knowledge of that field.}
+\begin{DottedList}
+  \item Understanding the domain speeds development, improves the solution, and helps anticipate extensions.
+  \item A domain document includes a summary, glossary, general knowledge, customers and users, environment, current tasks and procedures, competing software, and similarities to other domains.
+  \item Keep it accessible and maintainable, with useful diagrams and links.
+\end{DottedList}
+\HeaderOne{Starting Points, Problem, and Scope}
+\begin{DottedList}
+  \item Projects can start with a new opportunity or a problem in an existing system. Greenfield projects develop new systems.
+  \item State the customer's difficulty or opportunity briefly before choosing a solution.
+  \item Scope defines the work's boundary. List potential capabilities, then decide what belongs inside and outside it.
+  \item Narrow an overly broad problem; revisit higher-level goals if the scope is too narrow.
+\end{DottedList}
+\HeaderOne{What is a Requirement?}
+\BodyText{A requirement specifies what the proposed system must do or a constraint on its development. Together, requirements form a negotiated agreement among stakeholders.}
+\HeaderTwo{Writing a good requirement}
+\begin{DottedList}
+  \item Identify the system, required action or outcome, relevant conditions, and a measurable success criterion.
+  \item Use complete sentences and consistent terminology. Use shall for mandatory behaviour and make optional status explicit.
+  \item Specify the outcome without unnecessarily dictating implementation. Confirming a purchase need not require Microsoft Outlook unless that is a genuine platform constraint.
+  \item Slide example: the online banking system shall allow an Internet user to access her current account balance in less than five seconds.
+  \item For testing, clarify the response-time measurement's start, end, and workload conditions.
+\end{DottedList}
+\HeaderTwo{Pitfalls}
+\begin{DottedList}
+  \item Avoid vague terms such as quickly, user-friendly, flexible, minimal, or usually unless measurements define them.
+  \item Avoid speculative wishes, incomplete sentences, and assumptions about what users probably want.
+  \item Avoid impossible promises such as handling every conceivable failure or running on every platform.
+  \item State obligations for the system. Describing what a user happens to do does not adequately specify system behaviour.
+\end{DottedList}
+\HeaderOne{Types of Requirements}
+\begin{DottedList}
+  \item Functional requirements describe inputs, outputs, stored data, computations, and required timing or synchronization of actions.
+  \item Quality requirements specify measurable response time, throughput, resource use, reliability, availability, recovery, maintainability, or reusability.
+  \item Platform requirements constrain the environment and technology.
+  \item Process requirements constrain development activities, methods, or the project plan.
+  \item Retrieving a balance is functional behaviour; the response-time limit is a related quality requirement.
+\end{DottedList}
+\HeaderOne{Use Cases}
+\BodyText{A use case describes interactions through which an actor achieves a goal with the system. Actors are roles played by users or external participants.}
+\begin{DottedList}
+  \item Focus on observable interactions, avoiding internal algorithms and unnecessary screen-design details.
+  \item A use-case model contains use cases and optionally a description or diagram of their relationships.
+\end{DottedList}
+\HeaderTwo{Description format}
+\begin{DottedList}
+  \item Name: short task description. Actors: participating roles. Goals: what those roles seek to achieve.
+  \item Preconditions: what must already be true. Summary: brief overview. Related use cases: dependencies or specializations.
+  \item Steps: actor actions and system responses, commonly in two columns. Include alternative and exceptional paths.
+  \item Postconditions: the state after completion. Distinguish success and failure where necessary.
+\end{DottedList}
+\HeaderTwo{Relationships}
+\begin{DottedList}
+  \item Include factors shared behaviour into another use case. The dependency points from the including case to the included case.
+  \item Extend adds conditional or optional behaviour at an extension point. The dependency points from the extending case to the base case.
+  \item Generalization captures common behaviour with specialized variants. The arrow points toward the more general case or actor.
+  \item Inclusion reuses a lower-level task; extension keeps conditional behaviour separate from the basic flow.
+\end{DottedList}
+\HeaderTwo{Scenarios and priorities}
+\begin{DottedList}
+  \item A scenario is a concrete occurrence of a use case with specific actors, data, and events.
+  \item Prioritize central use cases, risky functions, and work with high commercial or stakeholder value.
+  \item Use cases help define scope, plan development, validate requirements, derive tests, and organize user manuals.
+  \item Agile user stories are typically shorter and less formal statements of needs. Discussion and acceptance criteria supply implementation detail.
+\end{DottedList}
+\HeaderTwo{Study example: registering for a course}
+\begin{DottedList}
+  \item Actor: student. Goal: obtain a course place. Preconditions: authenticated student and open registration period.
+  \item The student requests a course. The system displays details and availability. The student requests enrolment. The system checks eligibility and capacity, records the enrolment, and confirms it.
+  \item If capacity or prerequisites prevent enrolment, the system explains the rejection and does not record successful enrolment.
+  \item Success postcondition: an enrolment links the student to the course offering. This is an explanatory study example.
+\end{DottedList}
+\HeaderOne{Gathering and Analysing Requirements}
+\begin{DottedList}
+  \item Observation: review documents and watch users work; ask them to explain decisions and exceptions.
+  \item Interviews: ask about details, future goals, alternatives, other information sources, and helpful diagrams.
+  \item Brainstorming: use a moderator and a clear trigger question. Joint Application Development uses intensive collaborative sessions.
+  \item Prototypes: paper sketches or UI mock-ups help users react to proposed interactions; they may omit computation, databases, and integration.
+  \item Use-case analysis identifies actors and the tasks each needs to accomplish.
+  \item Repeat these techniques as understanding improves. More detail is needed for complex systems, external interfaces, technical domains, and costly consequences of error.
+\end{DottedList}
+\HeaderOne{Reviewing Requirements}
+\begin{DottedList}
+  \item Each requirement should be valuable, relevant, clear, unambiguous, consistent, feasible, verifiable, and uniquely identifiable.
+  \item Avoid unnecessary design restrictions and check that the resulting system can meet quality goals.
+  \item Review the entire set for completeness, organization, consistency, and stakeholder agreement.
+  \item Traceability links requirements to their origins, design, implementation, and tests, supporting change-impact analysis.
+\end{DottedList}
+\HeaderTwo{Ambiguity example}
+\BodyText{The slide's interest-calculation example asks for edits to one of three fields to compute the other two. One value generally cannot determine two unknowns. Specify which additional value remains fixed and how each edit is interpreted.}
+\HeaderOne{Managing Changing Requirements}
+\begin{DottedList}
+  \item Requirements change with business processes, technology, and improved understanding. Analysis continues throughout development.
+  \item Assess each change's benefit, effort, design effects, schedule impact, and affected tests.
+  \item Keep clients and users involved. Small presentation changes may be inexpensive; structural changes can require significant redesign.
+  \item Distinguish corrections from enhancements that expand scope. Update specifications and traceability after accepting a change.
+\end{DottedList}
+\end{document}

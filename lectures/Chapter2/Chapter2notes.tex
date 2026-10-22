@@ -1,0 +1,160 @@
+\RequirePackage{fix-cm}
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{needspace}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\textbf{SEG2105}}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+\setlength{\emergencystretch}{2em}
+
+\newcounter{chapterNumber}
+\setcounter{chapterNumber}{2}
+\newcounter{headerOneCount}
+\newcounter{headerTwoCount}[headerOneCount]
+\setcounter{headerOneCount}{-1}
+\renewcommand{\theheaderOneCount}{\arabic{headerOneCount}}
+\renewcommand{\theheaderTwoCount}{\arabic{headerTwoCount}}
+
+\newcommand{\Title}[1]{%
+  \begin{center}
+    \fontsize{16}{28}\selectfont\textbf{#1}
+  \end{center}
+}
+
+\newcommand{\HeaderOne}[1]{%
+  \Needspace{5\baselineskip}
+  \refstepcounter{headerOneCount}%
+  \setcounter{headerTwoCount}{-1}%
+  {\noindent\fontsize{14}{22}\selectfont\textbf{\arabic{chapterNumber}.\theheaderOneCount\ #1}\par}
+}
+
+\newcommand{\HeaderTwo}[1]{%
+  \Needspace{5\baselineskip}
+  \refstepcounter{headerTwoCount}%
+  {\noindent\fontsize{14}{20}\selectfont\textbf{\arabic{chapterNumber}.\theheaderOneCount.\theheaderTwoCount\ #1}\par}
+}
+
+\newcommand{\BodyText}[1]{%
+  \fontsize{11}{15}\selectfont #1\par
+
+}
+
+\newenvironment{NumberedList}{%
+  \begin{enumerate}[leftmargin=2em, itemsep=0.35em, topsep=0.35em]
+}{%
+  \end{enumerate}
+}
+
+\newenvironment{DottedList}{%
+  \begin{itemize}[leftmargin=2em, itemsep=0.35em, topsep=0.35em, label=\textbullet]
+}{%
+  \end{itemize}
+}
+
+\begin{document}
+\Title{Chapter 2: Review of Object Orientation}
+\HeaderOne{What is Object Orientation?}
+\begin{DottedList}
+  \item Procedural abstraction organizes computation into procedures. Data abstraction groups information describing an entity.
+  \item Object orientation places behaviour with the data it operates on. A running program consists of collaborating objects.
+  \item Abstraction emphasizes relevant characteristics. Modularity divides code into manageable units. Encapsulation groups state and behaviour and supports information hiding.
+\end{DottedList}
+\HeaderOne{Classes and Objects}
+\begin{DottedList}
+  \item An object is an individual runtime entity with identity, state, and behaviour. A class describes its instances' common structure and behaviour.
+  \item Film can be a class and a particular film an instance. Genre can be a class and Science Fiction one instance.
+  \item Choose singular, descriptive class names such as BankAccount, with the right level of generality and one clear meaning.
+\end{DottedList}
+\HeaderOne{Instance Variables}
+\begin{DottedList}
+  \item Instance variables hold information for each object. Attributes hold simple values; associations represent relationships with other objects.
+  \item A reference variable refers to an object; it is not the object itself. Multiple variables can refer to the same object, and a variable may later refer to another object.
+  \item The variable's declared type determines which operations are available through it.
+\end{DottedList}
+\HeaderTwo{Class variables}
+\begin{DottedList}
+  \item A static variable belongs to the class and is shared among its instances.
+  \item Constants and lookup data are common uses. Mutable shared state needs care because a change affects all its users.
+\end{DottedList}
+\HeaderOne{Methods, Operations, and Polymorphism}
+\begin{DottedList}
+  \item An operation describes behaviour independently of its implementation. A method supplies a class's implementation.
+  \item Polymorphism allows the same operation to behave differently for different kinds of objects; circles and rectangles calculate area differently.
+  \item Polymorphic methods reduce repeated type tests and switch statements.
+\end{DottedList}
+\HeaderOne{Inheritance Hierarchies}
+\begin{DottedList}
+  \item A superclass defines common features. Subclasses inherit applicable features and may add or specialize behaviour.
+  \item Apply the is-a rule: a checking account is an account, but a province is not a country.
+  \item Every inherited feature must make sense in the subclass. A part-of relationship is an association rather than inheritance.
+\end{DottedList}
+\HeaderOne{Inheritance, Polymorphism, and Variables}
+\HeaderTwo{Abstract classes and overriding}
+\begin{DottedList}
+  \item Declare an operation at the highest sensible level. An abstract method specifies behaviour without implementing it there.
+  \item An abstract class cannot be instantiated. A concrete class must implement or inherit implementations of all required abstract methods.
+  \item Overriding supplies a subclass implementation of an inherited instance method. It can extend or optimize behaviour while preserving the contract.
+  \item Overloading uses different parameter lists and is distinct from overriding.
+\end{DottedList}
+\HeaderTwo{Dynamic binding}
+\begin{DottedList}
+  \item The declared type controls whether a call is legal; the runtime object's class determines which overridden instance method executes.
+  \item Look first for an implementation in the runtime class, then up its superclass chain.
+  \item Example: Shape s = new Circle(); s.area(); executes the Circle implementation.
+  \item Casting changes the type through which a reference is viewed, not the object's class. An invalid downcast can fail at runtime.
+\end{DottedList}
+\HeaderOne{Java Fundamentals}
+\HeaderTwo{Language and documentation}
+\begin{DottedList}
+  \item The lecture traces object orientation through Simula, Smalltalk, and C++, then Java's development from Oak and its 1995 launch.
+  \item Java compiles to bytecode executed by a virtual machine. Read class and method documentation to understand library behaviour.
+  \item Javadoc generates API documentation from source declarations and comments.
+\end{DottedList}
+\HeaderTwo{Characters, strings, and collections}
+\begin{DottedList}
+  \item char holds one UTF-16 code unit; Character is its wrapper class. Some Unicode characters require two code units.
+  \item String represents text; + concatenates strings.
+  \item Arrays have fixed length. ArrayList supports a resizable collection. Iterators traverse elements using hasNext() and next().
+  \item Generics express element types: ArrayList\textless{}String\textgreater{} names = new ArrayList\textless{}\textgreater{}(); avoids many explicit casts during retrieval.
+\end{DottedList}
+\HeaderTwo{Exceptions and interfaces}
+\begin{DottedList}
+  \item Exceptions signal failures. A try/catch block handles specified types of exceptions; the handling should reflect the actual problem.
+  \item An interface specifies behaviour implementing classes promise to provide. A class can implement multiple interfaces, and a variable can have an interface type.
+  \item Runnable, Collection, Iterator, and Comparable are library examples.
+  \item The slides' prohibition on implementation code in interfaces describes older Java. Modern Java permits default and static interface methods.
+\end{DottedList}
+\HeaderTwo{Packages and access}
+\begin{DottedList}
+  \item Packages group related classes and provide namespaces. Imports allow short type names in source code.
+  \item public permits broad access; private hides implementation within the class and its enclosing nest; no modifier gives package access.
+  \item protected permits package access and subclass access, subject to Java's additional rules across packages.
+  \item Use the narrowest practical visibility.
+\end{DottedList}
+\HeaderTwo{Threads}
+\begin{DottedList}
+  \item A thread is an execution sequence that can progress concurrently with other threads.
+  \item Implement Runnable.run(), create a Thread using that Runnable, and call start(). Alternatively, subclass Thread.
+  \item Calling run() directly uses the calling thread; start() begins a separate thread of execution.
+  \item Coordinate access when threads share mutable state.
+\end{DottedList}
+\HeaderOne{Programming Style}
+\begin{DottedList}
+  \item Prefer understandable code and descriptive names. Shorter or cleverer code is not automatically better.
+  \item Explain non-obvious decisions in comments and organize class elements consistently.
+  \item Extract shared behaviour into methods instead of copying code, so fixes do not need to be repeated.
+  \item Follow the is-a rule, hide implementation details, and separate UI code from domain logic to improve reuse.
+\end{DottedList}
+\HeaderOne{Difficulties and Risks}
+\begin{DottedList}
+  \item Languages and libraries evolve. Deprecated features may need replacement during maintenance.
+  \item Measure efficiency against the application's requirements. Virtual-machine execution and dynamic binding alone do not establish that a program is too slow.
+\end{DottedList}
+\end{document}

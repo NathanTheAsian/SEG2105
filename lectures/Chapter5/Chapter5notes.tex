@@ -1,0 +1,326 @@
+\RequirePackage{fix-cm}
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{needspace}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\textbf{SEG2105}}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+
+\newcounter{chapterNumber}
+\setcounter{chapterNumber}{5}
+\newcounter{headerOneCount}
+\newcounter{headerTwoCount}[headerOneCount]
+\setcounter{headerOneCount}{-1}
+\renewcommand{\theheaderOneCount}{\arabic{headerOneCount}}
+\renewcommand{\theheaderTwoCount}{\arabic{headerTwoCount}}
+
+\newcommand{\Title}[1]{%
+  \begin{center}
+    \fontsize{16}{28}\selectfont\textbf{#1}
+  \end{center}
+}
+
+\newcommand{\HeaderOne}[1]{%
+  \Needspace{5\baselineskip}
+  \refstepcounter{headerOneCount}%
+  \setcounter{headerTwoCount}{-1}%
+  {\noindent\fontsize{14}{22}\selectfont\textbf{\arabic{chapterNumber}.\theheaderOneCount\ #1}\par}
+}
+
+\newcommand{\HeaderTwo}[1]{%
+  \Needspace{5\baselineskip}
+  \refstepcounter{headerTwoCount}%
+  {\noindent\fontsize{14}{20}\selectfont\textbf{\arabic{chapterNumber}.\theheaderOneCount.\theheaderTwoCount\ #1}\par}
+}
+
+\newcommand{\BodyText}[1]{%
+  \fontsize{11}{15}\selectfont #1\par
+
+}
+
+\newenvironment{NumberedList}{%
+  \begin{enumerate}[leftmargin=2em, itemsep=0.35em, topsep=0.35em]
+}{%
+  \end{enumerate}
+}
+
+\newenvironment{DottedList}{%
+  \begin{itemize}[leftmargin=2em, itemsep=0.35em, topsep=0.35em, label=\textbullet]
+}{%
+  \end{itemize}
+}
+
+\begin{document}
+\Title{Chapter 5: Modelling with Classes}
+\HeaderOne{UML and Diagram Types}
+\BodyText{The Unified Modelling Language (UML) provides graphical notation for modelling software. The lecture credits Booch, Rumbaugh, and Jacobson and describes OMG standardization beginning in 1997.}
+\begin{DottedList}
+  \item Class diagrams show classes and structural relationships.
+  \item Sequence and communication diagrams show interactions among objects.
+  \item State and activity diagrams describe behaviour and internal flows.
+  \item Component and deployment diagrams show logical organization and physical placement.
+\end{DottedList}
+\HeaderOne{Essentials of Class Diagrams}
+\begin{DottedList}
+  \item A class is a named rectangle, optionally divided into attribute and operation compartments.
+  \item Attributes describe simple data. Associations describe relationships between instances. Generalizations describe inheritance.
+  \item Operation signature: operationName(parameterName: ParameterType): ReturnType.
+  \item Show details appropriate to the model's purpose. Domain models need not contain every implementation method.
+\end{DottedList}
+\HeaderOne{Associations and Multiplicity}
+\BodyText{An association describes a structural relationship between instances. A link is one instance of that relationship.}
+\HeaderTwo{Reading multiplicity}
+\BodyText{Read the multiplicity at one end as the number of objects at that end that may be linked to one object at the opposite end.}
+\begin{DottedList}
+  \item 1 means exactly one; 0..1 means optional; * or 0..* means zero or more; 1..* means one or more. A range gives explicit lower and upper bounds.
+  \item Employee to Company: each employee works for one company in the example's scope; a company can have zero or more employees.
+  \item Company to BoardOfDirectors: each company has exactly one board and each board belongs to exactly one company.
+  \item Passenger to Booking: each booking belongs to exactly one passenger; a passenger can have zero or more bookings.
+  \item Validate both directions, zero cases, and temporary states. Multiplicity expresses domain rules rather than just typical data.
+\end{DottedList}
+\HeaderTwo{Names, roles, and navigation}
+\begin{DottedList}
+  \item Clear association and role names explain the relationship and distinguish its ends.
+  \item Reflexive associations connect a class to itself, such as Employee supervising Employee. Roles distinguish supervisor and subordinate.
+  \item Reflexive does not imply symmetric: supervising someone does not mean they supervise you.
+  \item Navigation indicates which objects can access related objects. The lecture uses arrows to restrict direction.
+  \item The slides treat undecorated associations as bidirectional; general UML usage can leave navigability unspecified. State the convention used in a model.
+\end{DottedList}
+\HeaderTwo{Association classes}
+\begin{DottedList}
+  \item Use an association class when information belongs to the relationship rather than either endpoint independently.
+  \item Study example: Enrolment links Student and CourseOffering and holds the grade for that enrolment. The grade is not an intrinsic property of either endpoint alone.
+  \item UML connects an association class to its association using a dashed line. An explicit intermediary class can also represent relationship information.
+  \item Avoid unnecessary one-to-one classes when the information has no distinct identity, lifecycle, or responsibility.
+\end{DottedList}
+\HeaderOne{Generalization}
+\begin{DottedList}
+  \item A hollow triangular arrow points from subclass to superclass. Apply the is-a test and check that inherited behaviour remains meaningful.
+  \item A generalization set groups specializations using a discriminator, the criterion distinguishing subclasses.
+  \item Do not turn individual objects or simple attribute values into subclasses without a structural or behavioural reason.
+  \item Multiple classification criteria may suggest additional generalization levels, multiple inheritance where supported, or separate role objects.
+  \item When a person's role can change, separate the role rather than requiring an existing object to change its runtime class.
+\end{DottedList}
+\HeaderTwo{Choosing inheritance or a role}
+\BodyText{A SavingsAccount can specialize Account when every savings account supports the account contract. In contrast, Student and Employee may be changing roles of a Person. A person can hold both roles, so separate role objects can express this without changing the Person object's class.}
+\begin{DottedList}
+  \item A discriminator explains a classification dimension, such as account type. Multiple dimensions need separate consideration rather than a hierarchy containing every possible combination.
+  \item Generalization expresses what an object is. An association expresses what it knows, belongs to, or is linked to.
+\end{DottedList}
+\HeaderOne{Object Diagrams}
+\begin{DottedList}
+  \item Object diagrams show snapshots of particular instances, attribute values, and links.
+  \item An underlined label commonly has the form objectName:ClassName; an unnamed instance can use :ClassName.
+  \item Links instantiate associations. Class-level generalization arrows do not appear between objects.
+  \item A subclass instance is also an instance of its superclasses. It does not require a separate superclass object linked to it.
+\end{DottedList}
+\HeaderOne{Aggregation, Composition, and Interfaces}
+\HeaderTwo{Whole-part relationships}
+\begin{DottedList}
+  \item Shared aggregation uses a hollow diamond at the whole end. Document the intended ownership meaning.
+  \item Composition uses a filled diamond at the whole end. A part belongs to at most one composite at a time; parts still owned by a destroyed composite are destroyed with it.
+  \item Holding a reference alone does not imply composition. Consider ownership and lifecycle rules.
+  \item Propagation occurs when an aggregate implements an operation by calling corresponding operations on its parts. It requires explicit programming, unlike language-supported inheritance.
+\end{DottedList}
+\HeaderTwo{Interfaces and explanatory notes}
+\begin{DottedList}
+  \item An interface specifies visible behaviour shared by implementing classes, useful for a common contract among unrelated classes.
+  \item UML realization uses a dashed line with a hollow triangle toward the interface; a small circle can represent a provided interface.
+  \item Diagram notes and surrounding prose explain assumptions, constraints, and rationale that graphics alone cannot express clearly.
+\end{DottedList}
+\HeaderOne{Object Constraint Language (OCL)}
+\BodyText{OCL expresses precise, side-effect-free properties of a model. Boolean constraints express rules that must hold; other OCL expressions can calculate values or navigate objects without changing state.}
+\HeaderTwo{Context and conditions}
+\begin{DottedList}
+  \item context identifies the type or operation being constrained; self denotes the contextual instance.
+  \item Invariants hold for instances in valid states described by the model.
+  \item Preconditions are assumed before an operation. Postconditions state what must hold afterward; result denotes the returned value.
+  \item Example: context Person inv: self.age \textgreater{}= 0.
+  \item Slide example: context Person::income(): Integer pre: self.age \textgreater{}= 18 post: result \textless{} 5000. These are illustrative domain rules, not universal facts about income.
+\end{DottedList}
+\HeaderTwo{Navigation and types}
+\begin{DottedList}
+  \item Dot navigation accesses properties and query operations.\\
+    Examples: \texttt{self.age}, \texttt{self.manager}, and \texttt{self.stockPrice()}.
+  \item A many-valued role evaluates to a collection. Use \texttt{->} for its operations.\\
+    Example: \texttt{self.employee->size()}.
+  \item Set is unordered with unique elements; OrderedSet is ordered with unique elements. Bag permits duplicates; Sequence is ordered and permits duplicates.
+  \item The lecture gives both Sequence and OrderedSet descriptions for ordered roles. The appropriate collection type also depends on whether duplicates are permitted.
+  \item Operators include and, or, not, xor, implies, =, and \textless{}\textgreater{}. Arithmetic and string expressions can appear within constraints.
+\end{DottedList}
+\HeaderTwo{Collection operations}
+\begin{DottedList}
+  \item isEmpty() and notEmpty() test for elements; size() counts them; includes(x) and excludes(x) test membership; sum() totals numeric elements.
+  \item exists(x | condition) requires at least one element satisfying the condition.
+  \item forAll(x | condition) requires every element to satisfy it. It is true for an empty collection, so also require notEmpty() when at least one element is necessary.
+  \item select(x | condition) retains matching elements; reject(x | condition) removes them.
+  \item includesAll(c) and excludesAll(c) compare membership against another collection.
+  \item Set intersection keeps common elements, union combines elements, and excluding(x) removes an element. first() accesses the first element of a nonempty ordered sequence.
+\end{DottedList}
+\HeaderTwo{Example constraints}
+\begin{DottedList}
+  \item context Company inv: self.employee-\textgreater{}notEmpty() requires at least one employee.
+  \item context Company inv: self.employee-\textgreater{}select(p | p.age \textgreater{} 50)-\textgreater{}notEmpty() requires at least one employee older than 50.
+  \item context Company inv: self.employee-\textgreater{}forAll(p | p.forename = 'Jack') requires every employee's forename to be Jack.
+  \item context Company inv: self.employee-\textgreater{}forAll(e1, e2 | e1 \textless{}\textgreater{} e2 implies e1.forename \textless{}\textgreater{} e2.forename) requires distinct employees to have distinct forenames. The guard excludes self-comparison.
+\end{DottedList}
+\HeaderTwo{Practice rules from the lecture}
+\begin{DottedList}
+  \item Supervisor age and salary comparisons must account for an absent supervisor when the relationship is optional.
+  \item A department manager must belong to that department's employees; employee identifiers must be unique.
+  \item A project's location must be among its department's locations, and an employee cannot supervise itself.
+  \item To limit workers below an hours threshold to two, select those work assignments and require the selected collection's size to be at most two. Hours belong to the work relationship when employees work on multiple projects.
+\end{DottedList}
+\HeaderTwo{Worked solutions to the practice rules}
+\BodyText{The following solutions use explicit example role names: Employee has an optional supervisor, age, salary, and ssn; Department has employees, manager, and locations; Project has department, location, and assignments; each WorkAssignment has employee and hours. Match these names to the roles in the class diagram before applying the constraints.}
+\BodyText{When a supervisor exists, the supervisor must be older and earn at least as much. The conditional avoids navigating an absent supervisor.}
+{\small
+\begin{verbatim}
+context Employee inv SupervisorAge:
+  if self.supervisor.oclIsUndefined() then true
+  else self.supervisor.age > self.age endif
+
+context Employee inv SupervisorSalary:
+  if self.supervisor.oclIsUndefined() then true
+  else self.salary <= self.supervisor.salary endif
+
+context Employee inv NoSelfSupervision:
+  if self.supervisor.oclIsUndefined() then true
+  else self.supervisor <> self endif
+\end{verbatim}
+}
+\BodyText{Assuming every department has exactly one manager, the manager must be included in its employee collection. Employee identifiers must be unique over the model's employee population.}
+{\small
+\begin{verbatim}
+context Department inv ManagerIsEmployee:
+  self.employees->includes(self.manager)
+
+context Employee inv UniqueSSN:
+  Employee.allInstances()->isUnique(e | e.ssn)
+\end{verbatim}
+}
+\BodyText{The identifier rule assumes ssn is required. Uniqueness and presence are different requirements: uniqueness alone does not establish that each employee has a valid identifier.}
+\BodyText{A project's location must belong to its department's locations. At most two employees may work fewer than ten hours on that project. Here each employee has at most one assignment per project, so counting assignments also counts employees.}
+{\small
+\begin{verbatim}
+context Project inv AllowedLocation:
+  self.department.locations->includes(self.location)
+
+context Project inv OneAssignmentPerEmployee:
+  self.assignments->isUnique(a | a.employee)
+
+context Project inv AtMostTwoShortAssignments:
+  self.assignments->select(a | a.hours < 10)->size() <= 2
+\end{verbatim}
+}
+\BodyText{If the model permits several assignments per employee on one project, first define whether the ten-hour limit applies to an individual assignment or the employee's total project hours. The constraint must follow that domain rule.}
+\HeaderOne{Developing Class Diagrams}
+\HeaderTwo{Model scope}
+\begin{DottedList}
+  \item An exploratory domain model helps understand the field.
+  \item A system domain model captures domain information represented by the application.
+  \item A complete system model adds UI, architecture, and utility classes. Keep domain logic independent of a particular UI.
+\end{DottedList}
+\HeaderTwo{Iterative process}
+\begin{DottedList}
+  \item Identify candidate classes, starting with one or two central ones.
+  \item Add clear attributes and associations, specify multiplicities, and identify useful generalizations.
+  \item Expand to other classes, allocate responsibilities, and identify operations and interfaces.
+  \item Review and iterate, adding or removing elements as understanding improves. Consider reuse and relevant design patterns.
+\end{DottedList}
+\HeaderTwo{Finding classes and relationships}
+\begin{DottedList}
+  \item Extract nouns and noun phrases from requirements; reject duplicates, instances, vague concepts, and information outside scope.
+  \item Some rejected nouns become attributes. Simple values usually belong in attributes; entities with identity and relationships may require classes.
+  \item Associations describe structural relationships such as membership, ownership, or connection.
+  \item Actions generally become operations. In a library, borrow creates a Loan, while return changes its returned date; these actions should not simply become permanent associations.
+  \item Avoid duplicate attributes. A coherent group of information may justify a separate class.
+  \item Find generalizations upward from similar classes or downward from general concepts. Prefer an interface for a small shared contract among otherwise different classes.
+\end{DottedList}
+\HeaderTwo{Responsibilities and operations}
+\begin{DottedList}
+  \item A responsibility is work the system must perform. Assign each functional requirement to appropriate collaborating classes.
+  \item Keep responsibilities related. Split overloaded classes, reconsider classes with no responsibilities, and add a class when no existing one fits a required responsibility.
+  \item Responsibilities include creation, attribute access, persistence, linking, searching, computation, transformation, and output.
+  \item Use cases and action verbs help identify responsibilities. Paper cards can record names, attributes, and responsibilities while relationships are rearranged.
+  \item Public operations provide needed services; supporting methods use the narrowest practical visibility.
+\end{DottedList}
+\HeaderTwo{Collaboration patterns}
+\begin{DottedList}
+  \item Adding a bidirectional link updates both objects consistently.
+  \item Creating a linked object initializes its link and updates the existing object's reference or collection.
+  \item Creating an association object connects it to both endpoints and updates their inverse links.
+  \item Reassigning a link removes the old inverse link and establishes the new one.
+  \item Searching an association traverses related objects and compares the relevant property.
+\end{DottedList}
+\HeaderOne{Implementing Class Diagrams in Java}
+\begin{DottedList}
+  \item Attributes become fields; generalization becomes extends; realization becomes implements.
+  \item A 1 or 0..1 association end commonly becomes an object reference; a many-valued end commonly becomes a collection.
+  \item References do not automatically enforce required multiplicity; collections do not automatically enforce minimum size or uniqueness. Constructors and update methods must preserve constraints.
+  \item Bidirectional relationships usually need fields at both ends and controlled updates to keep them consistent.
+  \item In the lecture example, RegularFlight.addSpecificFlight creates a SpecificFlight referring back to that RegularFlight, then adds it to the collection.
+  \item Restrict low-level constructors and helper operations so callers cannot create invalid partial relationships.
+\end{DottedList}
+\HeaderTwo{Worked Java example: a one-to-many association}
+\BodyText{This study example implements the lecture's RegularFlight--SpecificFlight relationship. A regular flight may have zero or more specific flights, and each specific flight belongs to exactly one regular flight. The factory method establishes both directions. The private constructor prevents clients from bypassing that method.}
+{\small
+\begin{verbatim}
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public final class RegularFlight {
+    private final List<SpecificFlight> flights = new ArrayList<>();
+
+    public SpecificFlight addSpecificFlight(LocalDate date) {
+        SpecificFlight flight = new SpecificFlight(date, this);
+        flights.add(flight);
+        return flight;
+    }
+
+    public List<SpecificFlight> getSpecificFlights() {
+        return List.copyOf(flights);
+    }
+
+    public static final class SpecificFlight {
+        private final LocalDate date;
+        private final RegularFlight regularFlight;
+
+        private SpecificFlight(LocalDate date,
+                               RegularFlight regularFlight) {
+            this.date = Objects.requireNonNull(date);
+            this.regularFlight =
+                Objects.requireNonNull(regularFlight);
+        }
+
+        public LocalDate getDate() { return date; }
+
+        public RegularFlight getRegularFlight() {
+            return regularFlight;
+        }
+    }
+}
+\end{verbatim}
+}
+\begin{DottedList}
+  \item The single reference enforces one owner after construction; the collection supports many specific flights. An empty collection satisfies the zero lower bound.
+  \item The returned list is an unmodifiable snapshot, so callers cannot remove links through the getter.
+  \item This example keeps the owner fixed. If reassignment is required, an operation must update the old owner's collection, the new owner's collection, and the reference together.
+  \item Required references do not by themselves imply UML composition. Composition additionally requires the model's ownership and destruction rules.
+\end{DottedList}
+\HeaderOne{Difficulties and Risks}
+\begin{DottedList}
+  \item Strong programming skills do not automatically produce good domain models; choosing abstractions and responsibilities is a separate skill.
+  \item Train the team, involve an experienced modeller, and review diagrams against requirements and concrete scenarios.
+  \item Check multiplicities, role names, inheritance, lifecycle assumptions, and whether implementation operations preserve constraints.
+\end{DottedList}
+\end{document}
