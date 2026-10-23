@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Travis Zhang 300488899 and Nathan Ng 300494064
  * 
  * LandVehicle
@@ -51,7 +51,7 @@ class LandVehicle extends Vehicle {
      * 
      * @return the number of Land Vehicles
      */
-    int getNumberOfLandVehicles() {
+    static int getNumberOfLandVehicles() {
         return numberOfLandVehicles;
     }
 
