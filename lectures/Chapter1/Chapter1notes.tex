@@ -4,6 +4,12 @@
 \usepackage{fancyhdr}
 \usepackage{enumitem}
 \usepackage{parskip}
+\usepackage{xcolor}
+
+% Personal notes: \comment{Write your thoughts here.}
+% Notes appear in grey in the compiled document; blank lines are supported.
+\definecolor{commentgray}{gray}{0.5}
+\newcommand{\comment}[1]{{\color{commentgray}#1}}
 \usepackage{graphicx}
 \usepackage{needspace}
 
@@ -60,6 +66,75 @@
 
 \begin{document}
 \Title{Chapter 1: Software and Software Engineering}
+\section*{Definitions}
+\subsection*{Software and engineering}
+\begin{DottedList}
+  \item \textbf{Software:} Programs and associated data and documentation that enable a computer system to perform tasks.
+  \item \textbf{Software engineering:} Systematic development and evolution of sufficiently high-quality software that solves customer problems within cost, time, and other constraints.
+  \item \textbf{Software evolution:} Ongoing modification of software as needs, technology, and understanding change.
+  \item \textbf{Real-time system:} A system whose correctness depends on producing results within required time limits as well as producing correct results.
+  \item \textbf{Embedded system:} A computer system integrated into a larger device to monitor or control its operation.
+  \item \textbf{Data-processing system:} Software that collects, stores, transforms, and reports data to support operations such as business transactions.
+  \item \textbf{Mobile application:} Software designed to run on mobile devices such as phones or tablets.
+  \item \textbf{Web application:} Software whose functionality users access through web technologies, commonly through a browser.
+  \item \textbf{Professional ethics:} Principles guiding responsible conduct toward the public, clients, employers, colleagues, and the profession.
+  \item \textbf{Constraint:} A limit or condition that a solution or its development must satisfy.
+\end{DottedList}
+\subsection*{Quality and stakeholders}
+\begin{DottedList}
+  \item \textbf{Software quality:} The extent to which software satisfies required behaviour and the needs and quality objectives of its stakeholders.
+  \item \textbf{Usability:} How effectively users can learn and use a system to accomplish their tasks.
+  \item \textbf{Efficiency:} How economically software uses processor time, memory, and other resources to perform its work.
+  \item \textbf{Reliability:} The ability to perform required functions without failure under stated conditions for a specified period.
+  \item \textbf{Maintainability:} The ease with which developers can understand, correct, and modify software.
+  \item \textbf{Reusability:} The extent to which software components can be used in other applications or projects.
+  \item \textbf{Stakeholder:} A person or organization affected by a system or having an interest in its development or operation.
+  \item \textbf{User:} A person who interacts with the system to accomplish tasks.
+  \item \textbf{Customer:} The person or organization requesting or purchasing a solution to a problem.
+  \item \textbf{Developer:} A person who contributes to creating or changing software.
+  \item \textbf{Development manager:} A person who coordinates development work, resources, costs, and delivery objectives.
+  \item \textbf{Quality tradeoff:} A decision balancing competing quality goals, such as performance and maintainability.
+  \item \textbf{Over-engineering:} Adding complexity or capabilities beyond what the problem and quality objectives justify.
+  \item \textbf{Defect:} A flaw in a software artifact that can cause incorrect behaviour or failure to meet a requirement.
+  \item \textbf{Failure:} An observed inability of a system to perform as required.
+\end{DottedList}
+\subsection*{Projects and maintenance}
+\begin{DottedList}
+  \item \textbf{Software maintenance:} Modification of existing software to correct problems, adapt to changes, or improve it.
+  \item \textbf{Corrective maintenance:} Changes that fix defects.
+  \item \textbf{Adaptive maintenance:} Changes that keep software usable when its environment, platforms, or external rules change.
+  \item \textbf{Enhancement:} A change that adds or extends user-visible capabilities.
+  \item \textbf{Reengineering:} Examining and restructuring existing software to improve its form and make continued evolution easier.
+  \item \textbf{Perfective maintenance:} Changes that improve existing software, including its performance or maintainability; the lecture emphasizes internal structural improvements.
+  \item \textbf{Greenfield development:} Creating a new system rather than modifying an existing one.
+  \item \textbf{Legacy system:} An existing system inherited from earlier development that remains in use and must often be maintained or evolved.
+\end{DottedList}
+\subsection*{Development activities and models}
+\begin{DottedList}
+  \item \textbf{Domain:} The business or technical field in which a system operates.
+  \item \textbf{Domain analysis:} Learning about that field and the problem the software should address.
+  \item \textbf{Requirement:} A statement of required system behaviour or a constraint on the system or its development.
+  \item \textbf{Requirements gathering:} Obtaining information about needs and constraints from stakeholders and other sources.
+  \item \textbf{Requirements analysis:} Organizing, examining, and resolving gathered information to establish coherent requirements.
+  \item \textbf{Specification:} A documented description of required behaviour and constraints.
+  \item \textbf{Design:} Deciding how a system will be organized and how its parts will satisfy requirements.
+  \item \textbf{Systems engineering:} Coordinating the overall system design, including allocating responsibilities between hardware and software.
+  \item \textbf{Software architecture:} The high-level organization of software into subsystems and their interactions.
+  \item \textbf{Subsystem:} A cooperating part of a larger system with a defined set of responsibilities.
+  \item \textbf{Detailed design:} Decisions about subsystem internals, algorithms, user interfaces, and data structures.
+  \item \textbf{Model:} A simplified representation emphasizing selected aspects of a system.
+  \item \textbf{Use-case model:} A model of actor goals and the interactions through which the system supports those goals.
+  \item \textbf{Structural model:} A model showing a system's elements and how they are organized or related.
+  \item \textbf{Behavioural model:} A model showing actions, interactions, and changes over time.
+  \item \textbf{Implementation / programming:} Translating a design into executable software.
+  \item \textbf{Review:} Examination of a software artifact to assess quality and find problems.
+  \item \textbf{Inspection:} A structured review using a defined process to detect defects in an artifact.
+  \item \textbf{Testing:} Executing software under selected conditions and comparing observed behaviour with expected results.
+  \item \textbf{Deployment:} Making software available for use in its intended environment.
+  \item \textbf{Process management:} Planning and coordinating development activities, resources, and progress.
+\end{DottedList}
+\newpage
+
 \HeaderOne{The Nature of Software}
 \begin{DottedList}
   \item Software is intangible: effort, progress, and quality can be difficult to see.

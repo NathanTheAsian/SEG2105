@@ -4,6 +4,12 @@
 \usepackage{fancyhdr}
 \usepackage{enumitem}
 \usepackage{parskip}
+\usepackage{xcolor}
+
+% Personal notes: \comment{Write your thoughts here.}
+% Notes appear in grey in the compiled document; blank lines are supported.
+\definecolor{commentgray}{gray}{0.5}
+\newcommand{\comment}[1]{{\color{commentgray}#1}}
 \usepackage{graphicx}
 \usepackage{needspace}
 
@@ -60,6 +66,110 @@
 
 \begin{document}
 \Title{Chapter 3: Basing Software Development on Reusable Technology}
+
+\section*{Definitions}
+\subsection*{Software reuse and frameworks}
+\begin{DottedList}
+  \item \textbf{Software reuse:} Building software using existing knowledge, designs, algorithms, code, or applications.
+  \item \textbf{Algorithm:} A sequence of steps for solving a problem or performing a task.
+  \item \textbf{Library:} A collection of reusable classes or procedures that programs can call.
+  \item \textbf{Framework:} Reusable software that provides a generic solution to a family of related problems. Developers customize it to create a specific application.
+  \item \textbf{Object-oriented framework:} A framework built from cooperating classes, often including abstract classes and interfaces.
+  \item \textbf{API (Application Programming Interface):} The publicly available operations through which application code uses a software component. In the lecture's frameworks, these are public methods.
+  \item \textbf{Service:} A method supplied by a framework that application code calls to perform an operation.
+  \item \textbf{Slot:} A required method or missing piece of functionality that the application developer must implement to complete a framework.
+  \item \textbf{Hook:} An optional method that a developer may override to customize how a framework responds to an event.
+  \item \textbf{Callback:} A method invoked by the framework when an event occurs, such as receiving a message.
+  \item \textbf{Abstract class:} A class that cannot be instantiated directly and is intended to be extended by subclasses. It can contain implemented and abstract methods.
+  \item \textbf{Abstract method:} A method declared without an implementation; a concrete subclass must provide its implementation.
+  \item \textbf{Interface:} A contract specifying operations that implementing classes provide, allowing different implementations to be used through the same contract.
+  \item \textbf{Product line / product family:} A set of related products built on a common technological base, with different features for different needs or markets.
+  \item \textbf{Horizontal framework:} A framework providing general facilities useful across many kinds of applications.
+  \item \textbf{Vertical / application framework:} A framework designed for a particular application domain, providing a more complete solution that developers adapt to specific needs.
+\end{DottedList}
+
+\subsection*{Client-server architecture}
+\begin{DottedList}
+  \item \textbf{Distributed system:} A system whose work is performed by separate cooperating programs, usually running on different machines.
+  \item \textbf{Client-server architecture:} A system organization in which clients request services and servers provide them over communication channels.
+  \item \textbf{Server:} A program that provides services to other programs connected to it.
+  \item \textbf{Client:} A program that connects to one or more servers to obtain services.
+  \item \textbf{Communication channel:} A means of exchanging data between programs, such as a network connection.
+  \item \textbf{Process:} A running instance of a program.
+  \item \textbf{Thread:} A sequence of execution within a process. Multiple threads allow a program to handle concurrent activities.
+  \item \textbf{Listening thread:} A thread that waits for incoming client connections.
+  \item \textbf{Client-connection thread:} A thread that handles communication with a particular connected client.
+  \item \textbf{Thin client:} A client that delegates most processing to the server.
+  \item \textbf{Fat client:} A client that performs a larger share of processing locally.
+  \item \textbf{Protocol:} Agreed rules defining valid messages, their meaning, their order, and how communication errors are handled.
+  \item \textbf{Broadcast:} Sending a message to all clients in a relevant group; in OCSF, typically all connected clients.
+\end{DottedList}
+
+\subsection*{Networking}
+\begin{DottedList}
+  \item \textbf{Host:} A device participating in a network, such as the machine running a client or server.
+  \item \textbf{IP (Internet Protocol):} The protocol used to address and route packets between hosts across networks.
+  \item \textbf{Packet:} A unit of data carried across a network, containing control information and a payload.
+  \item \textbf{IP address:} A numerical address used to identify a network interface for communication.
+  \item \textbf{IPv4:} An IP version using 32-bit addresses.
+  \item \textbf{IPv6:} An IP version using 128-bit addresses.
+  \item \textbf{TCP (Transmission Control Protocol):} A connection-based transport protocol that provides reliable, ordered delivery of a byte stream. It does not preserve application message boundaries.
+  \item \textbf{UDP (User Datagram Protocol):} A transport protocol that sends individual datagrams without guaranteeing delivery or ordering.
+  \item \textbf{Datagram:} A self-contained unit of data sent using a datagram protocol such as UDP.
+  \item \textbf{DNS (Domain Name System):} A system that resolves host names to IP addresses.
+  \item \textbf{Host name:} A human-readable name identifying a host, which can be resolved to an address.
+  \item \textbf{\texttt{localhost}:} A name referring to the machine on which the program is running.
+  \item \textbf{Port:} A number identifying a transport endpoint on a host, allowing communication to reach the appropriate service. Port numbers range from 0 to 65535.
+  \item \textbf{Well-known / system ports:} Ports numbered 0--1023, reserved for commonly standardized services.
+  \item \textbf{Registered / user ports:} Ports numbered 1024--49151, used for registered services and applications.
+  \item \textbf{Dynamic / private ports:} Ports numbered 49152--65535, available for temporary or private use.
+  \item \textbf{Ephemeral port:} A temporary port assigned by the operating system, commonly for a client connection. The allocation range depends on system configuration.
+  \item \textbf{Socket:} An endpoint through which a program communicates over a network.
+\end{DottedList}
+
+\subsection*{Java communication}
+\begin{DottedList}
+  \item \textbf{\texttt{Socket}:} The Java class representing one endpoint of a TCP connection.
+  \item \textbf{\texttt{ServerSocket}:} The Java class that listens for incoming TCP connections. Its \texttt{accept()} method returns a separate \texttt{Socket} for each accepted connection.
+  \item \textbf{Stream:} A sequence of data read from a source or written to a destination.
+  \item \textbf{Input stream:} A stream through which a program receives data.
+  \item \textbf{Output stream:} A stream through which a program sends data.
+  \item \textbf{\texttt{DataInputStream} / \texttt{DataOutputStream}:} Java classes for reading and writing primitive values and encoded strings. Reads must match the corresponding writes in type and order.
+  \item \textbf{\texttt{ObjectInputStream} / \texttt{ObjectOutputStream}:} Java classes for reading and writing serialized objects.
+  \item \textbf{Serialization:} Converting an object's state into a byte representation so it can be transmitted or stored.
+  \item \textbf{Deserialization:} Reconstructing an object from its serialized representation.
+  \item \textbf{Exception:} An event indicating an error or abnormal condition, such as a failed connection.
+  \item \textbf{Accept loop:} A loop that repeatedly accepts incoming connections so a server can serve more than one client.
+\end{DottedList}
+
+\subsection*{OCSF and SimpleChat}
+\begin{DottedList}
+  \item \textbf{OCSF (Object Client-Server Framework):} A reusable Java framework that supplies common client-server connection and communication functionality.
+  \item \textbf{\texttt{AbstractClient}:} The OCSF base class extended to create a client. The subclass implements \texttt{handleMessageFromServer}.
+  \item \textbf{\texttt{AbstractServer}:} The OCSF base class extended to create a server. The subclass implements \texttt{handleMessageFromClient}.
+  \item \textbf{\texttt{ConnectionToClient}:} An OCSF object representing one connected client on the server side, allowing the server to communicate with that client.
+  \item \textbf{Lifecycle hook:} A callback associated with a connection or server state change, such as starting, connecting, disconnecting, or closing.
+  \item \textbf{Backlog:} The requested limit on pending incoming connections waiting to be accepted.
+  \item \textbf{\texttt{HashMap}:} A Java collection that stores key-value pairs. OCSF uses it to associate application-specific information with a client connection.
+  \item \textbf{Synchronized method:} A Java method requiring a thread to acquire the relevant object or class lock before executing, helping coordinate access to shared state.
+  \item \textbf{\texttt{ThreadGroup}:} A Java mechanism for grouping related threads.
+  \item \textbf{SimpleChat:} An example chat application demonstrating how to build client and server functionality using OCSF.
+  \item \textbf{\texttt{EchoServer}:} The SimpleChat server subclass that sends received messages to connected clients.
+  \item \textbf{\texttt{ChatClient}:} The SimpleChat client subclass that sends user input to the server and passes received messages to the user interface.
+  \item \textbf{\texttt{ClientConsole}:} The console-based user interface that accepts typed input and displays messages.
+  \item \textbf{\texttt{ChatIF}:} The interface used to separate message display from networking code, allowing different user interfaces to be substituted.
+  \item \textbf{Separation of responsibilities:} Assigning distinct jobs to different components---for example, keeping user-interface code separate from networking code.
+\end{DottedList}
+
+\subsection*{Reuse risks}
+\begin{DottedList}
+  \item \textbf{Compatibility:} The ability of components or versions to work together correctly through agreed interfaces and protocols.
+  \item \textbf{Not-invented-here resistance:} Reluctance to adopt a solution because it was developed elsewhere.
+  \item \textbf{Extension mechanism:} A supported way to customize reusable software, such as subclassing or overriding hooks.
+  \item \textbf{Divergent local modifications:} Changes made directly to a local copy of reusable software that cause it to differ from the maintained version, complicating updates.
+  \item \textbf{Migration planning:} Planning how to move between versions while managing compatibility and continuity of operation.
+\end{DottedList}
+\newpage
 
 \HeaderOne{Building on the Experience of Others}
 \BodyText{Why Build X When Y Exists?}
@@ -187,7 +297,8 @@ Types of reuse:
   \item Server.java listens on port 8888, accepts one connection, reads a UTF message, writes a reply, and closes that connection.
   \item Serving multiple clients requires an accept loop and a strategy for handling each connection. Extending Thread alone does not start a background thread.
 \end{DottedList}
-\HeaderOne{The Object Client-Server Framework (OCSF)}
+\HeaderOne{The Object Client-Server Framework (OCSF)} 
+\comment{Essentially the OOP implementation of a client-server architecture}
 \begin{DottedList}
   \item OCSF supplies connection and communication behaviour through AbstractClient, AbstractServer, and ConnectionToClient.
   \item Extend intended abstract classes instead of modifying framework code.

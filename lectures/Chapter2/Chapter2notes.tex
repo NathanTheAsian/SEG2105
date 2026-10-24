@@ -4,6 +4,12 @@
 \usepackage{fancyhdr}
 \usepackage{enumitem}
 \usepackage{parskip}
+\usepackage{xcolor}
+
+% Personal notes: \comment{Write your thoughts here.}
+% Notes appear in grey in the compiled document; blank lines are supported.
+\definecolor{commentgray}{gray}{0.5}
+\newcommand{\comment}[1]{{\color{commentgray}#1}}
 \usepackage{graphicx}
 \usepackage{needspace}
 
@@ -60,6 +66,97 @@
 
 \begin{document}
 \Title{Chapter 2: Review of Object Orientation}
+\section*{Definitions}
+\subsection*{Object-oriented foundations}
+\begin{DottedList}
+  \item \textbf{Abstraction:} Emphasizing relevant characteristics while leaving out unnecessary detail.
+  \item \textbf{Procedural abstraction:} Representing a computation as a named procedure with a defined purpose and interface.
+  \item \textbf{Data abstraction:} Representing information about an entity through a defined data model and operations while hiding unnecessary representation details.
+  \item \textbf{Object orientation:} Organizing software as collaborating objects that combine data with the behaviour operating on it.
+  \item \textbf{Modularity:} Dividing software into manageable units with clear responsibilities and interfaces.
+  \item \textbf{Encapsulation:} Grouping state and behaviour within a unit such as a class and controlling access to it.
+  \item \textbf{Information hiding:} Concealing implementation decisions behind an interface so other code need not depend on those details.
+  \item \textbf{Object / instance:} An individual runtime entity with identity, state, and behaviour, created according to a class.
+  \item \textbf{Class:} A description of the common structure and behaviour of a set of objects.
+  \item \textbf{Identity:} What distinguishes an object from other objects, even when their data values are equal.
+  \item \textbf{State:} The values and relationships held by an object at a particular time.
+  \item \textbf{Behaviour:} The actions an object can perform and how it responds to operations.
+  \item \textbf{Instance variable:} A field holding information separately for each instance of a class.
+  \item \textbf{Attribute:} A property describing an object, commonly represented by a simple data value.
+  \item \textbf{Association:} A relationship between objects.
+  \item \textbf{Reference variable:} A variable whose value refers to an object; the variable is not the object itself.
+  \item \textbf{Declared type:} The type specified for a variable, which determines the operations available through that variable at compile time.
+  \item \textbf{Runtime class:} The actual class of an object during execution.
+  \item \textbf{Class / static variable:} A field belonging to a class rather than separately to each instance.
+  \item \textbf{Constant:} A named value intended to remain unchanged. A final reference cannot be reassigned, but its referenced object may still be mutable.
+  \item \textbf{Mutable state:} Information that can change during execution.
+\end{DottedList}
+\subsection*{Methods, inheritance, and polymorphism}
+\begin{DottedList}
+  \item \textbf{Operation:} A description of behaviour independently of a particular implementation.
+  \item \textbf{Method:} A class's implementation of an operation.
+  \item \textbf{Polymorphism:} The ability to invoke the same operation on different kinds of objects and obtain the implementation appropriate to each object.
+  \item \textbf{Inheritance:} A mechanism through which a subclass receives applicable features from a superclass and can add or specialize behaviour.
+  \item \textbf{Superclass:} A more general class from which another class inherits.
+  \item \textbf{Subclass:} A more specialized class that inherits from another class.
+  \item \textbf{Inheritance hierarchy:} The organization of classes through superclass-subclass relationships.
+  \item \textbf{Is-a rule:} The requirement that a subclass genuinely represents a kind of its superclass and supports the superclass contract.
+  \item \textbf{Part-of relationship:} A relationship in which one object forms part of another, represented through associations rather than inheritance alone.
+  \item \textbf{Contract:} The promised behaviour and conditions that users of a class or operation may rely on.
+  \item \textbf{Abstract method:} A method declared without an implementation that concrete subclasses must implement or inherit an implementation for.
+  \item \textbf{Abstract class:} A class that cannot be instantiated directly and may leave some operations unimplemented.
+  \item \textbf{Concrete class:} A class that can be instantiated and provides implementations for all required abstract methods.
+  \item \textbf{Overriding:} Supplying a subclass implementation of an inherited instance method.
+  \item \textbf{Overloading:} Defining methods with the same name but different parameter lists.
+  \item \textbf{Dynamic binding:} Selecting an overridden instance method at runtime according to the actual class of the receiving object.
+  \item \textbf{Cast:} An explicit conversion of the type through which a value is viewed. Casting a reference does not change the object's class.
+  \item \textbf{Downcast:} Casting a reference to a more specific type; an incompatible downcast fails at runtime.
+\end{DottedList}
+\subsection*{Java language and collections}
+\begin{DottedList}
+  \item \textbf{Bytecode:} Instructions produced by the Java compiler for execution by a Java virtual machine.
+  \item \textbf{Java virtual machine (JVM):} The execution environment that runs Java bytecode.
+  \item \textbf{API:} The accessible types and operations through which code uses a software component.
+  \item \textbf{Javadoc:} A tool and documentation-comment format for generating API documentation from Java source code.
+  \item \textbf{\texttt{char}:} A Java primitive value representing one UTF-16 code unit.
+  \item \textbf{Unicode:} A standard assigning code points to characters used in writing systems and symbols.
+  \item \textbf{UTF-16 code unit:} A 16-bit unit used to encode Unicode text; some characters require two such units.
+  \item \textbf{Wrapper class:} An object type representing a primitive value, such as \texttt{Character} for \texttt{char}.
+  \item \textbf{\texttt{String}:} Java's immutable representation of a sequence of text characters.
+  \item \textbf{Concatenation:} Joining text sequences together, for example using \texttt{+} with strings.
+  \item \textbf{Array:} An indexed container with a fixed length and a declared element type.
+  \item \textbf{Collection:} An object that groups elements; Java's \texttt{Collection} interface defines common collection operations.
+  \item \textbf{\texttt{ArrayList}:} A resizable, indexed list implementation in Java.
+  \item \textbf{Iterator:} An object used to traverse elements, commonly through \texttt{hasNext()} and \texttt{next()}.
+  \item \textbf{Generics:} Type parameters that express the types a class or method works with, improving compile-time type checking.
+  \item \textbf{Exception:} An object signalling a failure or abnormal condition that interrupts normal execution flow.
+  \item \textbf{\texttt{try}/\texttt{catch}:} Java constructs that run code and handle exceptions of specified types.
+  \item \textbf{Interface:} A contract that implementing classes promise to support; variables can use an interface type to refer to different implementations.
+  \item \textbf{Default interface method:} An instance method with an implementation supplied by an interface.
+  \item \textbf{Static method:} A method associated with a class or interface rather than invoked through instance-method dynamic binding.
+  \item \textbf{\texttt{Comparable}:} An interface for defining an object's natural ordering through comparison with another object.
+\end{DottedList}
+\subsection*{Organization, access, and execution}
+\begin{DottedList}
+  \item \textbf{Package:} A grouping of related Java types that provides a namespace and an access boundary.
+  \item \textbf{Namespace:} A naming context that distinguishes otherwise identical names.
+  \item \textbf{Import:} A declaration allowing a type or static member to be referenced by a shorter name in source code.
+  \item \textbf{Visibility / access control:} Rules determining which code may use a type or member.
+  \item \textbf{\texttt{public}:} An access modifier permitting broad access, subject to the accessibility of the enclosing type and module.
+  \item \textbf{\texttt{private}:} An access modifier limiting access to the declaring class and its enclosing nest of related nested classes.
+  \item \textbf{Package access:} Access available within the same package when no access modifier is specified.
+  \item \textbf{\texttt{protected}:} Access within the package and from subclasses, with additional restrictions for subclass access across packages.
+  \item \textbf{Thread:} A sequence of execution that can progress concurrently with other threads.
+  \item \textbf{Concurrency:} Multiple activities making progress during overlapping periods, whether or not they execute simultaneously.
+  \item \textbf{\texttt{Runnable}:} An interface defining a \texttt{run()} operation for a task that can be executed by a thread.
+  \item \textbf{\texttt{Thread.start()}:} An operation that starts a separate thread which executes its task's \texttt{run()} method.
+  \item \textbf{\texttt{run()}:} The method containing a thread task's work; calling it directly executes on the calling thread.
+  \item \textbf{User interface (UI):} The part of a system through which users provide input and receive output.
+  \item \textbf{Domain logic:} Code implementing the rules and operations of the problem domain.
+  \item \textbf{Deprecated feature:} A feature marked as discouraged for continued use, often because a preferred replacement exists.
+\end{DottedList}
+\newpage
+
 \HeaderOne{What is Object Orientation?}
 \begin{DottedList}
   \item Procedural abstraction organizes computation into procedures. Data abstraction groups information describing an entity.

@@ -4,6 +4,12 @@
 \usepackage{fancyhdr}
 \usepackage{enumitem}
 \usepackage{parskip}
+\usepackage{xcolor}
+
+% Personal notes: \comment{Write your thoughts here.}
+% Notes appear in grey in the compiled document; blank lines are supported.
+\definecolor{commentgray}{gray}{0.5}
+\newcommand{\comment}[1]{{\color{commentgray}#1}}
 \usepackage{graphicx}
 \usepackage{needspace}
 
@@ -59,6 +65,120 @@
 
 \begin{document}
 \Title{Chapter 5: Modelling with Classes}
+\section*{Definitions}
+\subsection*{UML and diagram types}
+\begin{DottedList}
+  \item \textbf{Model:} A simplified representation of selected aspects of a system or domain.
+  \item \textbf{UML (Unified Modelling Language):} A standardized graphical language for describing software structure and behaviour.
+  \item \textbf{OMG (Object Management Group):} The standards organization responsible for UML and OCL specifications.
+  \item \textbf{Class diagram:} A diagram showing classes, their attributes and operations, and structural relationships among them.
+  \item \textbf{Object diagram:} A snapshot of particular objects, their attribute values, and the links among them.
+  \item \textbf{Sequence diagram:} An interaction diagram emphasizing the order of messages exchanged by participants over time.
+  \item \textbf{Communication diagram:} An interaction diagram emphasizing participant links and the messages exchanged along them.
+  \item \textbf{State diagram:} A diagram showing states and the transitions between them in response to events.
+  \item \textbf{Activity diagram:} A diagram showing flows of actions and control or data, including decisions and concurrent work.
+  \item \textbf{Component diagram:} A diagram showing software components and their interfaces and dependencies.
+  \item \textbf{Deployment diagram:} A diagram showing execution nodes and how software artifacts are placed on them.
+\end{DottedList}
+\subsection*{Classes and structural relationships}
+\begin{DottedList}
+  \item \textbf{Class:} A description of the common structure and behaviour of its instances, drawn as a named rectangle in UML.
+  \item \textbf{Object / instance:} A particular entity with identity, state, and behaviour conforming to a class.
+  \item \textbf{Attribute:} A property describing data held by an instance.
+  \item \textbf{Operation:} A service or behaviour offered by a class, independently of its implementation.
+  \item \textbf{Operation signature:} The name, parameters and their types, and return type describing an operation in the lecture's UML notation.
+  \item \textbf{Association:} A structural relationship between instances of classes.
+  \item \textbf{Link:} A particular instance of an association connecting objects.
+  \item \textbf{Multiplicity:} The permitted number of objects at one association end that may be linked to one object at the opposite end.
+  \item \textbf{Multiplicity notation:} \texttt{1} means exactly one; \texttt{0..1} means zero or one; \texttt{*} or \texttt{0..*} means zero or more; \texttt{1..*} means one or more.
+  \item \textbf{Role name:} A name describing the function of an association end, such as supervisor or subordinate.
+  \item \textbf{Reflexive association:} An association connecting a class to itself; its links can connect different instances of that class.
+  \item \textbf{Symmetric relationship:} A relationship in which relating one object to another also implies the reverse relationship. Reflexive associations need not be symmetric.
+  \item \textbf{Navigability:} The ability to access related objects through an association in a specified direction.
+  \item \textbf{Bidirectional association:} An association supporting navigation in both directions.
+  \item \textbf{Association class:} A class attached to an association to hold information or behaviour belonging to the relationship itself.
+  \item \textbf{Intermediary / association object:} An object explicitly representing a relationship and linking its endpoints, such as an enrolment holding a student's grade in a course offering.
+  \item \textbf{Generalization:} An is-a relationship between a specialized class and a more general class, shown with a hollow triangle pointing to the superclass.
+  \item \textbf{Superclass:} A general class whose applicable features are inherited by subclasses.
+  \item \textbf{Subclass:} A specialized class that inherits features from a superclass.
+  \item \textbf{Generalization set:} A group of related generalizations representing a classification of a superclass.
+  \item \textbf{Discriminator:} The criterion or classification dimension distinguishing specializations, such as account type.
+  \item \textbf{Multiple inheritance:} Inheritance from more than one superclass, where supported by the modelling or programming language.
+  \item \textbf{Role object:} A separate object representing a role an entity can acquire, lose, or hold alongside other roles without changing its own runtime class.
+\end{DottedList}
+\subsection*{Whole-part relationships and interfaces}
+\begin{DottedList}
+  \item \textbf{Shared aggregation:} A whole-part association shown with a hollow diamond at the whole end; its intended ownership semantics should be documented.
+  \item \textbf{Composition:} A strong whole-part relationship shown with a filled diamond. A part belongs to at most one composite at a time, and parts still owned when the composite is destroyed are destroyed with it.
+  \item \textbf{Composite / aggregate:} The whole object in a whole-part relationship.
+  \item \textbf{Lifecycle:} The stages and rules governing an object's creation, existence, and destruction.
+  \item \textbf{Propagation:} Implementing an operation on a whole by explicitly invoking corresponding operations on its parts.
+  \item \textbf{Interface:} A contract of visible behaviour that implementing classes provide.
+  \item \textbf{Realization:} A relationship indicating that a class implements an interface's contract, shown with a dashed line and hollow triangle toward the interface.
+  \item \textbf{Provided interface:} An interface offered by a classifier or component, which UML can depict as a small circle.
+  \item \textbf{Diagram note:} Explanatory text attached to a diagram to document assumptions, constraints, or rationale.
+  \item \textbf{Constraint:} A rule limiting the valid states or behaviour of model elements.
+\end{DottedList}
+\subsection*{Object Constraint Language}
+\begin{DottedList}
+  \item \textbf{OCL:} Object Constraint Language; a language for expressing precise constraints, queries, and derived values on models without changing model state.
+  \item \textbf{Side-effect-free expression:} An expression that evaluates a value without modifying the objects it examines.
+  \item \textbf{Boolean constraint:} An expression that must evaluate to true for the model rule to be satisfied.
+  \item \textbf{Context:} The type or operation to which an OCL expression applies.
+  \item \textbf{\texttt{self}:} The contextual instance on which an OCL expression is evaluated.
+  \item \textbf{Invariant:} A condition that must hold for instances in the valid states specified by the model.
+  \item \textbf{Precondition:} A condition assumed to hold before an operation executes.
+  \item \textbf{Postcondition:} A condition that must hold after an operation completes when its preconditions hold.
+  \item \textbf{\texttt{result}:} The returned value referenced in an operation's OCL postcondition.
+  \item \textbf{Dot navigation:} Accessing an object's properties or query operations using a dot, as in \texttt{self.age}.
+  \item \textbf{Collection navigation:} Applying operations to a collection using arrow notation.\\
+    Example: \texttt{self.employee->size()}.
+  \item \textbf{\texttt{Set}:} An unordered collection containing no duplicates.
+  \item \textbf{\texttt{OrderedSet}:} An ordered collection containing no duplicates.
+  \item \textbf{\texttt{Bag}:} An unordered collection that permits duplicates.
+  \item \textbf{\texttt{Sequence}:} An ordered collection that permits duplicates.
+  \item \textbf{Logical operators:} \texttt{and} requires both conditions; \texttt{or} requires at least one; \texttt{not} negates a condition; \texttt{xor} requires exactly one; \texttt{implies} requires the consequent whenever the antecedent is true.
+  \item \textbf{Equality and inequality:} OCL uses \texttt{=} to test equality and \texttt{<>} to test inequality.
+  \item \textbf{\texttt{isEmpty()} / \texttt{notEmpty()}:} Tests whether a collection contains no elements or at least one element, respectively.
+  \item \textbf{\texttt{size()}:} Returns the number of elements in a collection.
+  \item \textbf{\texttt{includes(x)} / \texttt{excludes(x)}:} Tests whether a collection contains or does not contain an element.
+  \item \textbf{\texttt{sum()}:} Computes the total of a collection's numeric elements.
+  \item \textbf{\texttt{exists}:} Tests whether at least one collection element satisfies a condition.
+  \item \textbf{\texttt{forAll}:} Tests whether every collection element satisfies a condition; it is true for an empty collection.
+  \item \textbf{\texttt{select} / \texttt{reject}:} Returns a collection containing elements that satisfy or do not satisfy a condition, respectively, without modifying the original collection.
+  \item \textbf{\texttt{includesAll(c)} / \texttt{excludesAll(c)}:} Tests whether all elements of another collection are included or none are included, respectively.
+  \item \textbf{Set intersection:} A set operation returning elements common to both sets.
+  \item \textbf{Set union:} A set operation returning elements belonging to either set.
+  \item \textbf{\texttt{excluding(x)}:} Returns a collection with the specified element excluded.
+  \item \textbf{\texttt{first()}:} Returns the first element of a nonempty ordered collection.
+  \item \textbf{\texttt{oclIsUndefined()}:} Tests whether a value is undefined, including null or invalid; the worked example uses it to check for an absent supervisor.
+  \item \textbf{\texttt{allInstances()}:} Refers to the instances of a type in the model's evaluation scope.
+  \item \textbf{\texttt{isUnique}:} Tests whether an expression produces a different value for each collection element.
+  \item \textbf{Guard:} A condition controlling when another condition or action applies, such as excluding self-comparisons in a uniqueness rule.
+\end{DottedList}
+\subsection*{Developing and implementing models}
+\begin{DottedList}
+  \item \textbf{Exploratory domain model:} A model used to understand concepts and relationships in the problem domain.
+  \item \textbf{System domain model:} A model of domain information that the application will represent.
+  \item \textbf{Complete system model:} A model that includes domain classes together with interface, architecture, and utility classes needed by the system.
+  \item \textbf{Domain logic:} Rules and operations of the problem domain, kept independent of a particular user interface.
+  \item \textbf{Candidate class:} A possible class considered during analysis and retained only if it has an appropriate role in the model.
+  \item \textbf{Responsibility:} Work that the system must perform and that is assigned to suitable collaborating classes.
+  \item \textbf{Collaboration:} Objects working together to fulfil responsibilities through operations and relationships.
+  \item \textbf{Persistence:} Retaining information beyond the lifetime of a running process, commonly in files or a database.
+  \item \textbf{Design pattern:} A reusable description of a solution structure for a recurring design problem.
+  \item \textbf{Iterative modelling:} Repeatedly refining a model as scenarios, requirements, and understanding reveal improvements.
+  \item \textbf{Field:} A variable declared within a class, used to implement an attribute or relationship in Java.
+  \item \textbf{\texttt{extends}:} The Java keyword establishing class inheritance.
+  \item \textbf{\texttt{implements}:} The Java keyword declaring that a class provides an interface's contract.
+  \item \textbf{Inverse link:} The corresponding reference or collection entry at the opposite end of a bidirectional relationship.
+  \item \textbf{Constructor:} Code that initializes a newly created object and helps establish a valid initial state.
+  \item \textbf{Factory method:} An operation responsible for creating and returning an object, allowing initialization and link creation to be controlled.
+  \item \textbf{Unmodifiable snapshot:} A copy of collection contents that callers cannot change and that does not reflect later structural changes to the original collection.
+  \item \textbf{Reassignment:} Moving an association link to another object while consistently updating the old inverse link, new inverse link, and reference.
+\end{DottedList}
+\newpage
+
 \HeaderOne{UML and Diagram Types}
 \BodyText{The Unified Modelling Language (UML) provides graphical notation for modelling software. The lecture credits Booch, Rumbaugh, and Jacobson and describes OMG standardization beginning in 1997.}
 \begin{DottedList}

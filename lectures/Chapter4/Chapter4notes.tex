@@ -4,6 +4,12 @@
 \usepackage{fancyhdr}
 \usepackage{enumitem}
 \usepackage{parskip}
+\usepackage{xcolor}
+
+% Personal notes: \comment{Write your thoughts here.}
+% Notes appear in grey in the compiled document; blank lines are supported.
+\definecolor{commentgray}{gray}{0.5}
+\newcommand{\comment}[1]{{\color{commentgray}#1}}
 \usepackage{graphicx}
 \usepackage{needspace}
 
@@ -60,6 +66,86 @@
 
 \begin{document}
 \Title{Chapter 4: Developing Requirements}
+\section*{Definitions}
+\subsection*{Domain, problem, and scope}
+\begin{DottedList}
+  \item \textbf{Domain:} The business or technical field in which the software operates.
+  \item \textbf{Domain analysis:} Learning about the domain, its concepts, procedures, and problems before and during development.
+  \item \textbf{Domain expert:} A person with deep knowledge of the field in which the software will operate.
+  \item \textbf{Domain document:} A reference describing domain knowledge, terminology, stakeholders, environment, existing tasks, and related systems.
+  \item \textbf{Glossary:} A collection of terms and their agreed meanings within a domain or project.
+  \item \textbf{Stakeholder:} A person or organization affected by or interested in a system and its development.
+  \item \textbf{Customer:} The person or organization requesting or purchasing the system.
+  \item \textbf{User:} A person who interacts with the system to accomplish tasks.
+  \item \textbf{Problem statement:} A concise description of the customer's difficulty or opportunity before selecting a solution.
+  \item \textbf{Scope:} The boundary identifying which capabilities and responsibilities belong inside or outside the proposed work.
+  \item \textbf{Greenfield project:} A project that develops a new system rather than evolving an existing one.
+\end{DottedList}
+\subsection*{Requirements and quality measures}
+\begin{DottedList}
+  \item \textbf{Requirement:} A statement specifying what a proposed system must do or a constraint on the system or its development.
+  \item \textbf{Requirements specification:} The recorded set of agreed system requirements and constraints.
+  \item \textbf{Functional requirement:} A requirement describing system behaviour, including inputs, outputs, stored data, computations, and ordering or synchronization of actions.
+  \item \textbf{Quality requirement:} A measurable requirement specifying how well the system performs, such as response time, reliability, or resource use.
+  \item \textbf{Platform requirement:} A constraint on the technology or environment in which the system must operate.
+  \item \textbf{Process requirement:} A constraint on development activities, methods, deliverables, or the project plan.
+  \item \textbf{Constraint:} A restriction that a system or its development must satisfy.
+  \item \textbf{Response time:} The elapsed time between a defined request or event and the required response, measured under stated conditions.
+  \item \textbf{Throughput:} The amount of work completed per unit of time under stated conditions.
+  \item \textbf{Resource use:} The amount of processor time, memory, storage, bandwidth, or other resources consumed.
+  \item \textbf{Reliability:} The ability to perform required functions without failure under stated conditions for a specified period.
+  \item \textbf{Availability:} The extent to which a system is operational and accessible when needed.
+  \item \textbf{Recovery:} Restoring service and an acceptable state after a failure.
+  \item \textbf{Maintainability:} The ease of understanding, correcting, and modifying software.
+  \item \textbf{Reusability:} The ability to use software components in other systems or contexts.
+  \item \textbf{Synchronization:} Coordination of activities so that their relative timing or order satisfies required rules.
+  \item \textbf{Workload:} The volume and pattern of requests or activity under which system behaviour is measured.
+\end{DottedList}
+\subsection*{Use cases and scenarios}
+\begin{DottedList}
+  \item \textbf{Use case:} A description of interactions through which an actor achieves a goal with the system.
+  \item \textbf{Actor:} A role played by a user or an external participant, including another system, that interacts with the system being modelled.
+  \item \textbf{Goal:} The outcome an actor seeks to achieve through interaction with the system.
+  \item \textbf{Use-case model:} A collection of use cases and descriptions or diagrams of their relationships.
+  \item \textbf{Precondition:} A condition that must already hold before a use case or operation begins.
+  \item \textbf{Postcondition:} A condition describing the state that must hold after a use case or operation finishes.
+  \item \textbf{Basic flow:} The main sequence of actor actions and system responses for accomplishing the use-case goal.
+  \item \textbf{Alternative flow:} A valid variation from the main interaction sequence.
+  \item \textbf{Exceptional flow:} A sequence handling an error or another condition that prevents normal progress.
+  \item \textbf{Include relationship:} A relationship that factors required shared behaviour into a separate use case; its dependency points from the including case to the included case.
+  \item \textbf{Extend relationship:} A relationship adding conditional or optional behaviour to a base use case at an extension point; its dependency points from the extending case to the base case.
+  \item \textbf{Extension point:} A named location in a base use case where extending behaviour may be inserted.
+  \item \textbf{Generalization:} A relationship in which a specialized use case or actor inherits common characteristics from a more general one.
+  \item \textbf{Scenario:} One concrete occurrence of a use case with particular actors, data, and events.
+  \item \textbf{User story:} A short statement of a stakeholder need, refined through discussion and acceptance criteria.
+  \item \textbf{Acceptance criteria:} Specific conditions used to determine whether a requirement or user story has been satisfied.
+  \item \textbf{Prioritization:} Ordering requirements or use cases by considerations such as value, risk, importance, and dependencies.
+\end{DottedList}
+\subsection*{Gathering, reviewing, and managing requirements}
+\begin{DottedList}
+  \item \textbf{Requirements gathering / elicitation:} Discovering needs and constraints from stakeholders, existing documents, work practices, and other sources.
+  \item \textbf{Requirements analysis:} Examining and organizing gathered information to resolve conflicts, clarify meaning, and establish coherent requirements.
+  \item \textbf{Observation:} Learning about requirements by watching users perform their work and examining the context and exceptions.
+  \item \textbf{Interview:} A discussion using questions to learn about stakeholder needs, procedures, and goals.
+  \item \textbf{Brainstorming:} A facilitated group activity for generating ideas around a defined question or problem.
+  \item \textbf{Joint Application Development (JAD):} Intensive collaborative sessions in which stakeholders and developers work together to define requirements and proposed solutions.
+  \item \textbf{Prototype:} A preliminary representation or implementation used to explore ideas and obtain feedback; it may omit production functionality.
+  \item \textbf{UI mock-up:} A representation of proposed screens or interactions used to discuss the user interface.
+  \item \textbf{Use-case analysis:} Identifying actors, their goals, and the interactions needed to accomplish those goals.
+  \item \textbf{Requirements validation:} Reviewing whether requirements accurately express stakeholder needs and describe a useful, achievable system.
+  \item \textbf{Unambiguous requirement:} A requirement with one clear intended interpretation.
+  \item \textbf{Consistent requirements:} Requirements that do not contradict one another.
+  \item \textbf{Feasible requirement:} A requirement achievable within the available technology, resources, and constraints.
+  \item \textbf{Verifiable requirement:} A requirement whose satisfaction can be assessed using an objective test, inspection, analysis, or demonstration.
+  \item \textbf{Completeness:} Adequate coverage of required behaviour, conditions, and constraints within the agreed scope.
+  \item \textbf{Traceability:} Links connecting requirements to their sources, related requirements, design, implementation, and tests.
+  \item \textbf{Change-impact analysis:} Assessing how a proposed change affects requirements, design, implementation, tests, effort, and schedule.
+  \item \textbf{Requirements management:} Maintaining requirements and their traceability while evaluating and controlling changes over time.
+  \item \textbf{Correction:} A change that resolves an error in an existing requirement or implementation.
+  \item \textbf{Enhancement:} A change that adds or expands capabilities, potentially increasing scope.
+\end{DottedList}
+\newpage
+
 \HeaderOne{Domain Analysis}
 \BodyText{Domain analysis is learning about the business or technical field where software will operate. A domain expert has deep knowledge of that field.}
 \begin{DottedList}
