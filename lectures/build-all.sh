@@ -6,7 +6,7 @@ usage() {
 Usage:
   bash ./build-all.sh
 
-Build all .tex files under ChapterN folders (for all N) using build-latex.sh.
+Build every .tex file in the repository tree, starting from the parent of this script.
 EOF
 }
 
@@ -21,39 +21,34 @@ if [[ $# -gt 0 ]]; then
 fi
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+repo_root="$(cd -- "$script_dir/.." && pwd -P)"
 build_script="$script_dir/build-latex.sh"
 
-if [[ ! -x "$build_script" && ! -f "$build_script" ]]; then
+if [[ ! -f "$build_script" ]]; then
   echo "Missing build script: $build_script" >&2
   exit 1
 fi
 
-mapfile -t chapter_dirs < <(
-  find "$script_dir" -mindepth 1 -maxdepth 1 -type d -name 'Chapter[0-9]*' | sort -V
+mapfile -t tex_files < <(
+  find "$repo_root" \
+    -type f \
+    -name '*.tex' \
+    ! -path "$repo_root/.git/*" \
+    ! -path "$repo_root/trash/*" \
+    | sort -V
 )
 
-if [[ ${#chapter_dirs[@]} -eq 0 ]]; then
-  echo "No ChapterN folders found."
+if [[ ${#tex_files[@]} -eq 0 ]]; then
+  echo "No .tex files found under $repo_root."
   exit 0
 fi
 
 built_count=0
 
-for chapter_dir in "${chapter_dirs[@]}"; do
-  mapfile -t tex_files < <(
-    find "$chapter_dir" -mindepth 1 -maxdepth 1 -type f -name '*.tex' | sort -V
-  )
-
-  if [[ ${#tex_files[@]} -eq 0 ]]; then
-    echo "Skipping $(basename -- "$chapter_dir"): no .tex files found"
-    continue
-  fi
-
-  for tex_file in "${tex_files[@]}"; do
-    echo "Building: ${tex_file#$script_dir/}"
-    bash "$build_script" "$tex_file"
-    built_count=$((built_count + 1))
-  done
+for tex_file in "${tex_files[@]}"; do
+  echo "Building: ${tex_file#$repo_root/}"
+  bash "$build_script" "$tex_file"
+  built_count=$((built_count + 1))
 done
 
 echo "Built $built_count .tex file(s)."
