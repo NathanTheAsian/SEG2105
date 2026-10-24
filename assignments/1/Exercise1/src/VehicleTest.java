@@ -19,7 +19,6 @@ public class VehicleTest {
         landVehicles.add(new LandVehicle("Tractor"));
         landVehicles.add(new LandVehicle("Bus"));
 
-
         waterVehicles.add(new WaterVehicle());
         waterVehicles.add(new WaterVehicle());
         waterVehicles.add(new WaterVehicle("Ferry"));
@@ -29,6 +28,7 @@ public class VehicleTest {
         cars.add(new Car());
         cars.add(new Car("Civic"));
         cars.add(new Car("new Corolla"));
+        
         
         sailboats.add(new Sailboat());
         sailboats.add(new Sailboat());
@@ -86,7 +86,7 @@ public class VehicleTest {
         System.out.println("\n");
 
         System.out.println("Total number of vehicles: " + Vehicle.getNumberOfVehicles());
-        System.out.println("Total number of land vehicle : " + LandVehicle.getNumberOfVehicles());
+        System.out.println("Total number of land vehicle : " + LandVehicle.getNumberOfLandVehicles());
         System.out.println("Total number of water vehicle : " + WaterVehicle.getNumberOfWaterVehicles());
         
     }

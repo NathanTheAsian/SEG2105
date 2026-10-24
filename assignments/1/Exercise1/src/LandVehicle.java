@@ -51,7 +51,7 @@ class LandVehicle extends Vehicle {
      * 
      * @return the number of Land Vehicles
      */
-    int getNumberOfLandVehicles() {
+    static int getNumberOfLandVehicles() {
         return numberOfLandVehicles;
     }
 
