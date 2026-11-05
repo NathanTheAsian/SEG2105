@@ -52,9 +52,7 @@ import com.example.cupcake.ui.OrderViewModel
 import com.example.cupcake.ui.SelectOptionScreen
 import com.example.cupcake.ui.StartOrderScreen
 
-/**
- * enum values that represent the screens in the app
- */
+
 enum class CupcakeScreen(@StringRes val title: Int) {
     Start(title = R.string.app_name),
     Flavor(title = R.string.choose_flavor),
@@ -187,9 +185,6 @@ private fun cancelOrderAndNavigateToStart(
     navController.popBackStack(CupcakeScreen.Start.name, inclusive = false)
 }
 
-/**
- * Creates an intent to share order details
- */
 private fun shareOrder(context: Context, subject: String, summary: String) {
     // Create an ACTION_SEND implicit intent with order details in the intent extras
     val intent = Intent(Intent.ACTION_SEND).apply {
