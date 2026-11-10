@@ -1,0 +1,129 @@
+@startuml DomainModel
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 16
+skinparam titleFontSize 22
+skinparam nodesep 65
+skinparam linetype ortho
+hide empty methods
+
+package "Transit Network" {
+    class Route {
+    -routeNumber: int
+    -origin: String
+    -destination: String
+    -stops: Stop[*]
+    +getStop(position: int) : Stop
+        +isBusRoute(): boolean
+        +isOTrainLine(): boolean
+}
+
+    class Stop {
+    -stopCode: String
+    -name: String
+    -location: String
+    -position: int
+    -travelTime: int
+}
+
+    class Vehicle {
+    -fleetNumber: int
+    -passengerCapacity: int
+}
+    class Bus{
+    -bodyType: String
+}
+    class Train {
+    -numCars: int
+}
+
+Route "1" --> "*" Stop : contains
+Stop "1" --> "*" Route : served by
+Vehicle "1" --> "1" Route : assigned to
+Bus "1" --> "0..1" Vehicle : specializes
+Train "1" --> "0..1" Vehicle : specializes
+}
+
+package "Staff" {
+    class Driver {
+        -name: String
+        -employeeNumber: int
+        -yearsOfExperience: int
+        -mentor: Driver
+        -trainees: Driver[*]
+        -shifts: Shift[*]
+        +isTrainee(): boolean
+        +canOperateTrain(): boolean
+    }
+
+    class Shift {
+        -date: String
+        -hoursWorked: int
+        +overtimeWorked(): int
+    }
+
+    Driver "0..1" --> "*" Driver : mentors
+    Shift "1" --> "1" Driver
+}
+
+package "System" {
+    class System {
+        +getDriver(employeeNumber: int) : Driver
+        +getVehicle(fleetNumber: int) : Vehicle
+        +getRoute(routeNumber: int) : Route
+        +getStop(stopCode: String) : Stop
+        +getRider(customerNumber: int) : Rider
+        +findRoutes(start: String, end: String) : Route[*]
+    }
+
+    class Incident {
+        -date: String
+        -incidentType: String
+        -description: String
+        -severity: String
+    }
+
+    class Fare {
+        +calculateFare(route: Route) : double
+    }
+
+    class PaperTicket extends Fare {
+        -trip: Route
+    }
+
+    class MonthlyPass extends Fare {
+        -expiryDate: Date
+    }
+
+    class PrestoCard extends Fare {
+        -balance: double
+        -lowBalanceThreshold: double
+        -notifications: Notification[*]
+        +reload(amount: double) : void
+    }
+
+    class Notification {
+        -message: String
+        -sentDate: Date
+    }
+    class Rider{
+        -name: String
+        -customerNumber: int 
+    }
+    System "1" --> "*" Driver
+    System "1" --> "*" Vehicle
+    System "1" --> "*" Route
+    System "1" --> "*" Stop
+    System "1" --> "*" Rider
+    System "1" --> "*" Fare
+    System "1" --> "*" PaperTicket
+    System "1" --> "*" MonthlyPass
+    System "1" --> "*" PrestoCard
+    System "1" --> "*" Notification
+    Incident "*" <--> "1..*" Driver
+    PrestoCard "1" --> "*" Notification
+}
+
+@enduml
