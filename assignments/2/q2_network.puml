@@ -1,0 +1,72 @@
+@startuml
+!pragma layout smetana
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam classAttributeIconSize 0
+skinparam dpi 180
+scale 0.85
+skinparam defaultFontSize 14
+skinparam nodesep 20
+skinparam ranksep 30
+skinparam padding 3
+hide empty methods
+left to right direction
+
+object "<u>r95 : BusRoute</u>" as r95 {
+ routeNumber = 95
+ origin = "Baseline"
+ destination = "Blair"
+}
+object "<u>line1 : OTrainLine</u>" as line1 {
+ routeNumber = 1
+ origin = "Tunney's Pasture"
+ destination = "Blair"
+}
+object "<u>hurdman : Stop</u>" as h {
+ stopCode = "HUR"
+ name = "Hurdman"
+ location = "Hurdman station, Ottawa"
+}
+object "<u>rs95 : RouteStop</u>" as rs95 {
+ position = 3
+ minutesFromStart = 18
+}
+object "<u>rs1 : RouteStop</u>" as rs1 {
+ position = 5
+ minutesFromStart = 12
+}
+r95 -- h : serves
+(r95,h) .. rs95
+line1 -- h : serves
+(line1,h) .. rs1
+object "<u>bus4821 : Bus</u>" as bus {
+ fleetNumber = 4821
+ passengerCapacity = 90
+ bodyType = doubleDecker
+}
+object "<u>train1200 : Train</u>" as train {
+ fleetNumber = 1200
+ passengerCapacity = 300
+ numberOfCars = 2
+}
+object "<u>t95 : Trip</u>" as t95 {
+ tripId = "T95-01"
+ scheduledStart = 2026-11-06 08:00
+ scheduledEnd = 2026-11-06 09:00
+}
+object "<u>t1 : Trip</u>" as t1 {
+ tripId = "T1-01"
+ scheduledStart = 2026-11-06 08:00
+ scheduledEnd = 2026-11-06 08:30
+}
+object "<u>messi : Driver</u>" as messi
+object "<u>ronaldo : Driver</u>" as ronaldo
+r95 -- t95 : follows
+line1 -- t1 : follows
+bus -- t95 : operates
+train -- t1 : operates
+messi -- t95 : drives
+ronaldo -- t1 : drives
+
+@enduml

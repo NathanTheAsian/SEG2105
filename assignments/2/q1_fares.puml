@@ -1,0 +1,78 @@
+@startuml
+!pragma layout smetana
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam classAttributeIconSize 0
+skinparam dpi 180
+scale 0.85
+skinparam defaultFontSize 14
+skinparam nodesep 20
+skinparam ranksep 30
+skinparam padding 3
+hide empty methods
+skinparam packageStyle folder
+skinparam packageBackgroundColor white
+skinparam packageBorderColor black
+skinparam packageFontStyle bold
+skinparam classBackgroundColor #F1F1F1
+skinparam classBorderColor #888888
+skinparam classFontColor black
+skinparam ArrowColor black
+package "Transit Network" {
+class Trip
+class "Stop" as BoardingStop
+class "Stop" as AlightingStop
+class Route
+}
+package "System" {
+class Rider {
+ -customerNumber: Integer {unique}
+ -name: String
+}
+abstract class FareMedium {
+ -mediumId: String {unique}
+}
+class PaperTicket {
+ -used: Boolean
+}
+class MonthlyPass {
+ -expiryDate: Date
+}
+class PrestoCard {
+ -balance: Decimal
+ -lowBalanceThreshold: Decimal [0..1]
+}
+class Notification {
+ -notificationId: String {unique}
+ -message: String
+ -sentAt: DateTime
+}
+class Boarding {
+ -boardingId: String {unique}
+ -boardedAt: DateTime
+ -amountCharged: Decimal
+}
+class JourneyPlan {
+ -planId: String {unique}
+ -requestedAt: DateTime
+}
+class plannedJourney {
+ -legNumber: Integer
+}
+}
+FareMedium <|-- PaperTicket
+FareMedium <|-- MonthlyPass
+FareMedium <|-- PrestoCard
+Rider "1" -- "0..*" FareMedium : owns
+PrestoCard "1" -- "0..*" Notification : triggers
+Rider "1" -- "0..*" Notification : receives
+Rider "1" -- "0..*" Boarding : makes
+FareMedium "1" -- "0..*" Boarding : pays for
+Trip "1" -- "0..*" Boarding : boarded trip
+Rider "1" -- "0..*" JourneyPlan : requests
+JourneyPlan "1" *-- "1..*" plannedJourney : legs
+plannedJourney "0..*" -- "1" Route : uses
+plannedJourney "0..*" -- "1" BoardingStop : boardingStop
+plannedJourney "0..*" -- "1" AlightingStop : alightingStop
+@enduml

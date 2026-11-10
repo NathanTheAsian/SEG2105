@@ -1,0 +1,70 @@
+@startuml
+!pragma layout smetana
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam classAttributeIconSize 0
+skinparam dpi 180
+scale 0.85
+skinparam defaultFontSize 14
+skinparam nodesep 20
+skinparam ranksep 30
+skinparam padding 3
+hide empty methods
+
+object "<u>kylian : Rider</u>" as k {
+ customerNumber = 201
+ name = "Kylian Mbappé"
+}
+object "<u>marta : Rider</u>" as m {
+ customerNumber = 202
+ name = "Marta"
+}
+object "<u>card : PrestoCard</u>" as c {
+ mediumId = "P201"
+ balance = 3.75
+ lowBalanceThreshold = 10.00
+}
+object "<u>pass : MonthlyPass</u>" as p {
+ mediumId = "M202"
+ expiryDate = 2026-12-31
+}
+object "<u>notice : Notification</u>" as n {
+ notificationId = "N201"
+ message = "Balance $3.75 is below $10.00"
+ sentAt = 2026-11-06 08:04
+}
+k -- c : owns
+m -- p : owns
+c -- n : triggers
+k -- n : receives
+object "<u>board : Boarding</u>" as b {
+ boardingId = "B201"
+ boardedAt = 2026-11-06 08:04
+ amountCharged = 3.75
+}
+object "<u>t1 : Trip</u>" as t1
+k -- b : makes
+c -- b : pays for
+t1 -- b : boarded trip
+object "<u>plan : JourneyPlan</u>" as jp {
+ planId = "JP201"
+ requestedAt = 2026-11-06 07:55
+}
+object "<u>leg : plannedJourney</u>" as leg {
+ legNumber = 1
+}
+object "<u>bayview : Stop</u>" as bay {
+ stopCode = "BAY"
+ name = "Bayview"
+ location = "Bayview station, Ottawa"
+}
+object "<u>hurdman : Stop</u>" as h
+object "<u>line1 : OTrainLine</u>" as line1
+k -- jp : requests
+jp *-- leg : legs
+leg -- line1 : uses
+leg -- bay : boardingStop
+leg -- h : alightingStop
+
+@enduml

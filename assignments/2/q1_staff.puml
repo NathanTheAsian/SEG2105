@@ -1,0 +1,65 @@
+@startuml
+!pragma layout smetana
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam classAttributeIconSize 0
+skinparam dpi 180
+scale 0.85
+skinparam defaultFontSize 14
+skinparam nodesep 20
+skinparam ranksep 30
+skinparam padding 3
+hide empty methods
+left to right direction
+skinparam packageStyle folder
+skinparam packageBackgroundColor white
+skinparam packageBorderColor black
+skinparam packageFontStyle bold
+skinparam classBackgroundColor #F1F1F1
+skinparam classBorderColor #888888
+skinparam classFontColor black
+skinparam ArrowColor black
+package "Transit Network" {
+class Route
+}
+package "System" {
+class Incident {
+ -incidentId: String {unique}
+ -date: Date
+ -description: String
+ -kind: IncidentKind
+ -severity: Severity
+}
+enum IncidentKind {
+ accident
+ fine
+}
+enum Severity {
+ minor
+ major
+}
+}
+package "Staff" {
+class Driver {
+ -employeeNumber: Integer {unique}
+ -name: String
+ -yearsOfExperience: Decimal
+ -trainAuthorized: Boolean
+}
+class Shift {
+ -date: Date
+ -hoursWorked: Decimal
+ -/overtimeHours: Decimal
+}
+class RouteAssignment {
+ -startTime: DateTime
+ -endTime: DateTime
+}
+}
+Driver "0..1\nmentor" -- "0..*\ntrainees" Driver : mentors
+Driver "1" -- "0..*" Shift : works
+Shift "1" -- "1..*" RouteAssignment : has
+Route "1" -- "0..*" RouteAssignment : assigned route
+Driver "1..*" -- "0..*" Incident : involved in
+@enduml

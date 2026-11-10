@@ -1,0 +1,61 @@
+@startuml
+!pragma layout smetana
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam classAttributeIconSize 0
+skinparam dpi 180
+scale 0.85
+skinparam defaultFontSize 14
+skinparam nodesep 20
+skinparam ranksep 30
+skinparam padding 3
+hide empty methods
+
+object "<u>messi : Driver</u>" as m {
+ employeeNumber = 101
+ name = "Lionel Messi"
+ yearsOfExperience = 15
+ trainAuthorized = false
+}
+object "<u>jude : Driver</u>" as j {
+ employeeNumber = 102
+ name = "Jude Bellingham"
+ yearsOfExperience = 1
+ trainAuthorized = false
+}
+object "<u>ronaldo : Driver</u>" as r {
+ employeeNumber = 103
+ name = "Cristiano Ronaldo"
+ yearsOfExperience = 12
+ trainAuthorized = true
+}
+m -- j : mentor / trainee
+object "<u>sM : Shift</u>" as sm {
+ date = 2026-11-06
+ hoursWorked = 7.0
+ /overtimeHours = 0.0
+}
+object "<u>sR : Shift</u>" as sr {
+ date = 2026-11-06
+ hoursWorked = 9.0
+ /overtimeHours = 1.5
+}
+object "<u>aM : RouteAssignment</u>" as am {
+ startTime = 2026-11-06 08:00
+ endTime = 2026-11-06 15:00
+}
+object "<u>aR : RouteAssignment</u>" as ar {
+ startTime = 2026-11-06 08:00
+ endTime = 2026-11-06 17:00
+}
+object "<u>r95 : BusRoute</u>" as r95
+object "<u>line1 : OTrainLine</u>" as line1
+m -- sm : works
+r -- sr : works
+sm -- am : has
+sr -- ar : has
+am -- r95 : assigned route
+ar -- line1 : assigned route
+
+@enduml

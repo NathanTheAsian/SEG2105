@@ -1,0 +1,73 @@
+@startuml
+!pragma layout smetana
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam classAttributeIconSize 0
+skinparam dpi 180
+scale 0.85
+skinparam defaultFontSize 14
+skinparam nodesep 20
+skinparam ranksep 30
+skinparam padding 3
+hide empty methods
+left to right direction
+object "<u>messi : Driver</u>" as m
+object "<u>i1 : Incident</u>" as i1 {
+ incidentId = "I1"
+ date = 2026-10-01
+ description = "Collision at depot"
+ kind = accident
+ severity = major
+}
+m -- i1 : involved in
+object "<u>i2 : Incident</u>" as i2 {
+ incidentId = "I2"
+ date = 2026-10-02
+ description = "Collision at intersection"
+ kind = accident
+ severity = major
+}
+m -- i2 : involved in
+object "<u>i3 : Incident</u>" as i3 {
+ incidentId = "I3"
+ date = 2026-10-03
+ description = "Parking fine"
+ kind = fine
+ severity = minor
+}
+m -- i3 : involved in
+object "<u>i4 : Incident</u>" as i4 {
+ incidentId = "I4"
+ date = 2026-10-04
+ description = "Speeding fine"
+ kind = fine
+ severity = minor
+}
+m -- i4 : involved in
+object "<u>i5 : Incident</u>" as i5 {
+ incidentId = "I5"
+ date = 2026-10-05
+ description = "Bus-lane fine"
+ kind = fine
+ severity = minor
+}
+m -- i5 : involved in
+object "<u>i6 : Incident</u>" as i6 {
+ incidentId = "I6"
+ date = 2026-10-06
+ description = "Stopping fine"
+ kind = fine
+ severity = minor
+}
+m -- i6 : involved in
+object "<u>i7 : Incident</u>" as i7 {
+ incidentId = "I7"
+ date = 2026-10-07
+ description = "Parking fine"
+ kind = fine
+ severity = minor
+}
+m -- i7 : involved in
+
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+!pragma layout smetana
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam classAttributeIconSize 0
+skinparam dpi 180
+scale 0.85
+skinparam defaultFontSize 14
+skinparam nodesep 20
+skinparam ranksep 30
+skinparam padding 3
+hide empty methods
+
+left to right direction
+actor Rider as rider
+actor Driver as driver
+actor "Operations manager /\ndispatcher" as ops
+rectangle "OConnect City Transit Management System" {
+ usecase "Plan a trip" as plan
+ usecase "Pay fare\n--\nextension point:\npost-payment" as pay
+ usecase "Validate fare medium" as valid
+ usecase "Send low-balance\nnotification" as notify
+ usecase "Reload Presto card" as reload
+ usecase "Record daily hours" as hours
+ usecase "Assign / reassign driver" as assign
+ usecase "Record driver incident" as incident
+ usecase "Maintain routes and stops" as network
+}
+actor "Payment service" as payment
+actor "Notification gateway" as gateway
+rider -- plan
+rider -- pay
+rider -- reload
+driver -- hours
+ops -- assign
+ops -- incident
+ops -- network
+pay ..> valid : <<include>>
+notify ..> pay : <<extend>>\n[successful Presto payment and\nconfigured threshold > new balance]
+notify -right- gateway
+reload -right- payment
+valid -[hidden]-> gateway
+valid -[hidden]-> payment
+
+@enduml
